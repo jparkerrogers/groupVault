@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
     
     
     var group: Group?
@@ -19,21 +19,33 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
     let currentUser = UserController.sharedController.currentUser
     
     @IBOutlet weak var tableView: UITableView!
-    
     @IBOutlet weak var groupNameLabel: UILabel!
     
-    @IBOutlet weak var messageTextField: UITextField!
     
-    @IBOutlet weak var cameraImage: UIButton!
+    @IBOutlet weak var mockKeyboardView: UIView!
+    @IBOutlet weak var mockTextView: UITextView!
+    @IBOutlet weak var mockCameraImageButton: UIButton!
+    @IBOutlet weak var mockSendButton: UIButton!
+
+
+    @IBOutlet var trueKeyboardView: UIView!
+    @IBOutlet weak var trueCameraButton: UIButton!
+    @IBOutlet weak var trueSendButton: UIButton!
+    @IBOutlet weak var trueTextView: UITextView!
     
-    @IBOutlet weak var practiceImageView: UIImageView!
+    
+    @IBOutlet weak var mockKeyboardViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var blurryView: UIView!
-    
     @IBOutlet weak var fetchingGroupMessagesIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MessageBoardViewController.keyboardShown(_:)), name: UIKeyboardDidShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MessageBoardViewController.keyboardHidden(_:)), name: UIKeyboardDidHideNotification, object: nil)
+        
         fetchingGroupMessagesIndicator.hidesWhenStopped = true
         fetchingGroupMessagesIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
         blurryView.hidden = true
@@ -43,12 +55,15 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = UITableViewAutomaticDimension
         
+        mockTextView.inputAccessoryView = trueKeyboardView
+        mockTextView.delegate = self
+        trueTextView.delegate = self
     }
     
     override func viewWillAppear(animated: Bool) {
         let cameraTapGesture = UITapGestureRecognizer(target: self, action: #selector(MessageBoardViewController.cameraImageTapped))
-        cameraImage.userInteractionEnabled = true
-        cameraImage.addGestureRecognizer(cameraTapGesture)
+        trueCameraButton.userInteractionEnabled = true
+        trueCameraButton.addGestureRecognizer(cameraTapGesture)
     }
     
     
@@ -75,9 +90,9 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
     
     @IBAction func sendButtonTapped(sender: AnyObject) {
         
-        if messageTextField.text != "" {
+        if trueTextView.text != "" {
             createMessage()
-            messageTextField.text = ""
+            trueTextView.text = ""
         }
         self.scrollToBottom(true)
     }
@@ -89,7 +104,7 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
             group = group,
             groupID = group.identifier else { return }
         
-        if let message = messageTextField.text {
+        if let message = trueTextView.text {
             MessageController.createMessage(currentUserID, senderName: currentUser.username, senderProfileImage: currentUserImage, groupID: groupID, text: message, image: nil, timer: Timer(), viewedBy: [], completion: { (success, message) in
                 
                 if success == true {
@@ -264,8 +279,53 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         }
     }
     
+    func textViewDidBeginEditing(textView: UITextView) {
+        self.trueTextView.becomeFirstResponder()
+        if let constraint = self.trueKeyboardView.constraints.filter({$0.identifier == "_UIKBAutolayoutHeightConstraint"}).first {
+            
+            constraint.constant = self.trueTextView.contentSize.height + 10
+        }
+    }
+    
+    func textViewDidChange(textView: UITextView) {
+        
+        UIView.animateWithDuration(0.2) {
+            
+            if let constraint = self.trueKeyboardView.constraints.filter({$0.identifier == "_UIKBAutolayoutHeightConstraint"}).first {
+                
+                if self.trueTextView.contentSize.height <= 160 {
+                    constraint.constant = self.trueTextView.contentSize.height + 10
+                } else {
+                    constraint.constant = 220
+                }
+            }
+        }
+    }
+    
+    func keyboardShown(notification: NSNotification) {
+        let info  = notification.userInfo!
+        let value: AnyObject = info[UIKeyboardFrameEndUserInfoKey]!
+        let rawFrame = value.CGRectValue
+        let keyboardFrame = view.convertRect(rawFrame, fromView: nil)
+        
+        trueKeyboardView.hidden = false
+        mockKeyboardView.hidden = true
+        tableViewBottomConstraint.constant = keyboardFrame.height
+        scrollToBottom(true)
+    }
+    
+    func keyboardHidden(notification: NSNotification) {
+        tableViewBottomConstraint.constant = 46
+        trueKeyboardView.hidden = true
+        mockKeyboardView.hidden = false
+        trueTextView.text = ""
+        mockTextView.text = ""
+        scrollToBottom(false)
+    }
+    
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        messageTextField.resignFirstResponder()
+        trueTextView.resignFirstResponder()
         return true
     }
     
