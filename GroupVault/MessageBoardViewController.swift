@@ -10,6 +10,7 @@ import UIKit
 
 class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
     
+    static let sharedController = MessageBoardViewController()
     
     var group: Group?
     var groupMessages: [Message] = []
@@ -20,6 +21,7 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var groupNameLabel: UILabel!
+    @IBOutlet var imageAccessoryView: UIImageView!
     
     
     @IBOutlet weak var mockKeyboardView: UIView!
@@ -58,12 +60,19 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         mockTextView.inputAccessoryView = trueKeyboardView
         mockTextView.delegate = self
         trueTextView.delegate = self
+        
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         let cameraTapGesture = UITapGestureRecognizer(target: self, action: #selector(MessageBoardViewController.cameraImageTapped))
         trueCameraButton.userInteractionEnabled = true
         trueCameraButton.addGestureRecognizer(cameraTapGesture)
+        
+        let mockCameraTapGesture = UITapGestureRecognizer(target: self, action: #selector(MessageBoardViewController.cameraImageTapped))
+        mockCameraImageButton.userInteractionEnabled = true
+        mockCameraImageButton.addGestureRecognizer(mockCameraTapGesture)
+        
     }
     
     
@@ -201,6 +210,8 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         
+        trueCameraButton.resignFirstResponder()
+        
         let cameraAlert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
         if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) {
@@ -302,6 +313,13 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         }
     }
     
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if trueTextView.text == "" {
+            trueTextView.resignFirstResponder()
+        }
+        return true
+    }
+    
     func keyboardShown(notification: NSNotification) {
         let info  = notification.userInfo!
         let value: AnyObject = info[UIKeyboardFrameEndUserInfoKey]!
@@ -323,11 +341,16 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         scrollToBottom(false)
     }
     
+//    func dismissKeybard() {
+//        view.endEditing(true)
+//    }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         trueTextView.resignFirstResponder()
         return true
     }
+    
+    
     
     func startFetchingDataIndicator() {
         self.blurryView.hidden = false
@@ -338,7 +361,19 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         self.blurryView.hidden = true
         fetchingGroupMessagesIndicator.stopAnimating()
     }
+    
+    
+    func imageAccessoryViewConfiguration(message: Message) {
+        
+        imageAccessoryView.frame = blurryView.frame
+        imageAccessoryView.image = message.image
+    }
+    
+    func dismissFullscreenImage(sender: UITapGestureRecognizer) {
+        sender.view?.removeFromSuperview()
+    }
 }
+
 
 
 extension MessageBoardViewController: SenderTableViewCellDelegate, RecieverTableViewCellDelegate {
@@ -356,8 +391,16 @@ extension MessageBoardViewController: SenderTableViewCellDelegate, RecieverTable
         if viewedByArray.contains(currentUserID) {
             sender.goBackToLockImageView()
         } else if message.image != nil {
+            sender.receiverImageView.hidden = false
+            let newImage = UIImageView(image: message.image)
+            newImage.frame = self.view.frame
+            newImage.layer.borderColor = UIColor.blackColor().CGColor
+            newImage.userInteractionEnabled = true
+            let tap = UITapGestureRecognizer(target: self, action: #selector(MessageBoardViewController.dismissFullscreenImage(_:)))
+            newImage.addGestureRecognizer(tap)
+            self.view.addSubview(newImage)
             TimerController.sharedInstance.startTimer(message.timer ?? Timer())
-            sender.imageViewForReceiver(message)
+//            sender.imageViewForReceiver(message)
         } else if message.text != "" {
             TimerController.sharedInstance.startTimer(message.timer ?? Timer())
             sender.messageViewForReceiver(message)

@@ -34,9 +34,12 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
     
     var message: Message?
     
+    var cell: ReceiverCell?
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        receiverImageView.hidden = true
     }
     
     
@@ -109,6 +112,7 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
     }
     
     func imageViewForReceiver(message: Message) {
+        
         message.timer?.delegate = self
         sendersProfileImageView.hidden = false
         lockAndUnlockButton.hidden = true
