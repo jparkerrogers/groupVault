@@ -49,6 +49,8 @@ class BuildAGroupViewController: UIViewController, UITableViewDelegate, UITableV
             self.tableView.keyboardDismissMode = .OnDrag
             
         }
+        
+        navigationItem.title = "BuildAGroup"
     }
     
     

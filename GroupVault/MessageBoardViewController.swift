@@ -141,11 +141,9 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
                 
                 if success == true {
                     dispatch_async(dispatch_get_main_queue(), {
-//                        self.trueTextView.resignFirstResponder()
-//                        self.mockTextView.resignFirstResponder()
-//                        self.tableView.reloadData()
                         
-                        // think about cell for row at index Path and number of rows in section
+                        self.tableView.reloadData()
+                        
                     })
                 } else {
                     print("message not saved")

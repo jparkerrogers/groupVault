@@ -110,7 +110,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func CreateAccount(sender: AnyObject) {
         emailTextField.text = ""
         passwordTextField.text = ""
-        print("AAAAAA")
         
     }
     

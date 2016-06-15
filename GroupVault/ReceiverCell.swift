@@ -43,6 +43,12 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        sendersProfileImageView.layer.borderWidth = 1
+        sendersProfileImageView.layer.masksToBounds = false
+        sendersProfileImageView.layer.borderColor = UIColor.blackColor().CGColor
+        sendersProfileImageView.layer.cornerRadius = sendersProfileImageView.frame.height/2
+        sendersProfileImageView.clipsToBounds = true
     }
     
     

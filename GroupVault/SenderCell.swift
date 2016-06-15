@@ -31,7 +31,6 @@ class SenderCell: UITableViewCell, SenderTimerDelegate {
     
     @IBOutlet weak var senderLockAndUnlockButton: UIButton!
     
-    @IBOutlet weak var rightBubbleConstraint: NSLayoutConstraint!
     
     
     weak var delegate: SenderTableViewCellDelegate?
@@ -40,7 +39,11 @@ class SenderCell: UITableViewCell, SenderTimerDelegate {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        senderProfileImageView.layer.borderWidth = 1
+        senderProfileImageView.layer.masksToBounds = false
+        senderProfileImageView.layer.borderColor = UIColor.blackColor().CGColor
+        senderProfileImageView.layer.cornerRadius = senderProfileImageView.frame.height/2
+        senderProfileImageView.clipsToBounds = true
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -82,7 +85,6 @@ class SenderCell: UITableViewCell, SenderTimerDelegate {
         senderMessageView.layer.borderWidth = 0.5
         senderMessageText.textColor = UIColor.blackColor()
         senderMessageText.text = message.text
-//        senderProfileImageView = UIImageView(frame: CGRectMake(0, 0, 100, 100))
         ImageController.imageForUser(message.senderProfileImage) { (success, image) in
             if success {
                 self.senderProfileImageView.image = image
@@ -104,12 +106,12 @@ class SenderCell: UITableViewCell, SenderTimerDelegate {
         senderLockAndUnlockButton.hidden = true
         senderDate.hidden = false
         senderImageView.hidden = false
+        senderImageView.image = message.image
         senderImageView.layer.masksToBounds = true
+        senderImageView.contentMode = UIViewContentMode.ScaleAspectFit
         senderImageView.layer.cornerRadius = 10.0
         senderImageView.layer.borderColor = UIColor.blackColor().CGColor
         senderImageView.layer.borderWidth = 0.5
-        senderImageView.image = message.image
-        senderProfileImageView = UIImageView(frame: CGRectMake(0, 0, 100, 100))
         senderMessageStackView.hidden = true
         ImageController.imageForUser(message.senderProfileImage) { (success, image) in
             if success {

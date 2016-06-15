@@ -38,12 +38,15 @@ class WelcomeTableViewController: UITableViewController {
         
         welcomeLabelForUser()
         
+        
+        
+        
         ///UserInterface
         
-        
-        self.navigationController?.navigationBar.barTintColor = UIColor.lightGreyMessageColor()
-        self.navigationController?.navigationBar.tintColor = UIColor.myDarkGrayColor()
+        self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.tintColor = UIColor.myLightBlueColor()
         tableView.separatorColor = UIColor.myDarkGrayColor()
+        
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -52,7 +55,11 @@ class WelcomeTableViewController: UITableViewController {
             self.groups = group
             self.tableView.reloadData()
             
+            if self.groups.count == 0 {
+                self.showLoginAlert("You aren't in any groups Yet!", message: "Tap the "+" to make a group!")
+            }
         }
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -77,7 +84,6 @@ class WelcomeTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return self.groups.count
     }
     
@@ -92,46 +98,14 @@ class WelcomeTableViewController: UITableViewController {
         return cell
     }
     
+    func showLoginAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let action = UIAlertAction(title: "ok", style: .Default, handler: nil)
+        alert.addAction(action)
+        presentViewController(alert, animated: true, completion: nil)
+    }
     
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
-    
-    /*
-     // Override to support editing the table view.
-     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-     if editingStyle == .Delete {
-     // Delete the row from the data source
-     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-     } else if editingStyle == .Insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-    
-    
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+   
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if segue.identifier == "toEnterAGroup" {
