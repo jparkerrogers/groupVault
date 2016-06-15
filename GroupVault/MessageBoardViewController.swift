@@ -20,7 +20,6 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
     let currentUser = UserController.sharedController.currentUser
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var groupNameLabel: UILabel!
     @IBOutlet var imageAccessoryView: UIImageView!
     
     
@@ -28,8 +27,8 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
     @IBOutlet weak var mockTextView: UITextView!
     @IBOutlet weak var mockCameraImageButton: UIButton!
     @IBOutlet weak var mockSendButton: UIButton!
-
-
+    
+    
     @IBOutlet var trueKeyboardView: UIView!
     @IBOutlet weak var trueCameraButton: UIButton!
     @IBOutlet weak var trueSendButton: UIButton!
@@ -47,11 +46,11 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MessageBoardViewController.keyboardShown(_:)), name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MessageBoardViewController.keyboardHidden(_:)), name: UIKeyboardDidHideNotification, object: nil)
+        tapGestureToDismissKeyBoard()
         
         fetchingGroupMessagesIndicator.hidesWhenStopped = true
         fetchingGroupMessagesIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
         blurryView.hidden = true
-        self.tableView.reloadData()
         
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -60,6 +59,24 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         mockTextView.inputAccessoryView = trueKeyboardView
         mockTextView.delegate = self
         trueTextView.delegate = self
+        
+        //User Interface
+        
+        mockTextView.layer.borderWidth = 2.0
+        mockTextView.layer.borderColor = UIColor.myDarkGrayColor().CGColor
+        mockTextView.layer.cornerRadius = 6.0
+        mockSendButton.layer.cornerRadius = 6.0
+        mockKeyboardView.backgroundColor = UIColor.myLightBlueColor()
+        
+        trueTextView.layer.borderWidth = 2.0
+        trueTextView.layer.borderColor = UIColor.myDarkGrayColor().CGColor
+        trueTextView.layer.cornerRadius = 6.0
+        trueSendButton.layer.cornerRadius = 6.0
+        trueSendButton.backgroundColor = UIColor(white: 0.75, alpha: 0.25)
+        trueKeyboardView.backgroundColor = UIColor(white: 0.75, alpha: 0.25)
+        
+        self.navigationController?.navigationBar.tintColor = UIColor.lightGreyMessageColor()
+        self.navigationController?.navigationBar.barTintColor = UIColor.myDarkGrayColor()
         
         
     }
@@ -79,7 +96,6 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
     
     override func viewDidAppear(animated: Bool) {
         
-        scrollToBottom(true)
         
     }
     
@@ -101,9 +117,16 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         
         if trueTextView.text != "" {
             createMessage()
+            trueTextView.resignFirstResponder()
+            mockTextView.resignFirstResponder()
             trueTextView.text = ""
+            mockTextView.text = ""
+            mockKeyboardView.hidden = false
         }
-        self.scrollToBottom(true)
+//        mockTextView.resignFirstResponder()
+//        trueTextView.text = ""
+//        mockTextView.text = ""
+//        mockKeyboardView.hidden = false
     }
     
     func createMessage() {
@@ -118,8 +141,9 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
                 
                 if success == true {
                     dispatch_async(dispatch_get_main_queue(), {
-                        
-                        self.tableView.reloadData()
+//                        self.trueTextView.resignFirstResponder()
+//                        self.mockTextView.resignFirstResponder()
+//                        self.tableView.reloadData()
                         
                         // think about cell for row at index Path and number of rows in section
                     })
@@ -187,16 +211,19 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
     
     func updateWith(group: Group) {
         
-        self.groupNameLabel.text = group.groupName
+        self.navigationItem.title = group.groupName
         self.group = group
         
         self.startFetchingDataIndicator()
         MessageController.fetchMessagesForGroup(group) { (success, messages) in
             if success == true {
                 self.stopFetchingDataIndicator()
-            if messages.count > self.groupMessages.count {
-                self.groupMessages = messages.sort({ $0.identifier < $1.identifier })
-                self.tableView.reloadData()
+                if messages.count > self.groupMessages.count {
+                    self.groupMessages = messages.sort({ $0.identifier < $1.identifier })
+                    dispatch_async(dispatch_get_main_queue(), { 
+                        self.tableView.reloadData()
+                        self.scrollToBottom(true)
+                    })
                 }
             } else {
                 self.stopFetchingDataIndicator()
@@ -210,7 +237,8 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         
-        trueCameraButton.resignFirstResponder()
+        trueTextView.resignFirstResponder()
+        mockTextView.resignFirstResponder()
         
         let cameraAlert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
@@ -307,19 +335,19 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
                 if self.trueTextView.contentSize.height <= 160 {
                     constraint.constant = self.trueTextView.contentSize.height + 10
                 } else {
-                    constraint.constant = 220
+                    constraint.constant = 160
                 }
             }
         }
     }
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        if trueTextView.text == "" {
-            trueTextView.resignFirstResponder()
-        }
-        return true
-    }
-    
+    //    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    //        if trueTextView.text == "" {
+    //            trueTextView.resignFirstResponder()
+    //        }
+    //        return true
+    //    }
+    //
     func keyboardShown(notification: NSNotification) {
         let info  = notification.userInfo!
         let value: AnyObject = info[UIKeyboardFrameEndUserInfoKey]!
@@ -328,8 +356,8 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         
         trueKeyboardView.hidden = false
         mockKeyboardView.hidden = true
-        tableViewBottomConstraint.constant = keyboardFrame.height
         scrollToBottom(true)
+        tableViewBottomConstraint.constant = keyboardFrame.height
     }
     
     func keyboardHidden(notification: NSNotification) {
@@ -341,14 +369,16 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         scrollToBottom(false)
     }
     
-//    func dismissKeybard() {
-//        view.endEditing(true)
+//    func imageShown(notification: NSNotification) {
+//        var message: Message?
+//        self.message = message
+//        var newImage = UIImageView(image: message!.image)
+//        newImage = UIImageView(frame: self.blurryView.frame)
+//        newImage.layer.borderColor = UIColor.blackColor().CGColor
+//        newImage.userInteractionEnabled = true
+//        self.view.addSubview(newImage)
+//        
 //    }
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        trueTextView.resignFirstResponder()
-        return true
-    }
     
     
     
@@ -369,9 +399,16 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         imageAccessoryView.image = message.image
     }
     
-    func dismissFullscreenImage(sender: UITapGestureRecognizer) {
-        sender.view?.removeFromSuperview()
+    func tapGestureToDismissFullscreenImage() {
+        view.removeFromSuperview()
     }
+    
+    func tapGestureToDismissKeyBoard() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(MessageBoardViewController.tapGestureToDismissKeyBoard))
+        tapGesture.cancelsTouchesInView = true
+        view.addGestureRecognizer(tapGesture)
+    }
+    
 }
 
 
@@ -391,16 +428,8 @@ extension MessageBoardViewController: SenderTableViewCellDelegate, RecieverTable
         if viewedByArray.contains(currentUserID) {
             sender.goBackToLockImageView()
         } else if message.image != nil {
-            sender.receiverImageView.hidden = false
-            let newImage = UIImageView(image: message.image)
-            newImage.frame = self.view.frame
-            newImage.layer.borderColor = UIColor.blackColor().CGColor
-            newImage.userInteractionEnabled = true
-            let tap = UITapGestureRecognizer(target: self, action: #selector(MessageBoardViewController.dismissFullscreenImage(_:)))
-            newImage.addGestureRecognizer(tap)
-            self.view.addSubview(newImage)
             TimerController.sharedInstance.startTimer(message.timer ?? Timer())
-//            sender.imageViewForReceiver(message)
+            sender.imageViewForReceiver(message)
         } else if message.text != "" {
             TimerController.sharedInstance.startTimer(message.timer ?? Timer())
             sender.messageViewForReceiver(message)

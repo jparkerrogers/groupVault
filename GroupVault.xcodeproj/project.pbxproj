@@ -11,6 +11,7 @@
 		AC01C36E1CB4332A00D1A1CB /* SenderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC01C36D1CB4332A00D1A1CB /* SenderCell.swift */; };
 		AC01C3701CB434CF00D1A1CB /* ReceiverCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC01C36F1CB434CF00D1A1CB /* ReceiverCell.swift */; };
 		AC5AABF81D08DC2B00AB73DC /* WelcomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5AABF71D08DC2B00AB73DC /* WelcomeTableViewCell.swift */; };
+		AC707EEC1D11C42A00A45A65 /* ReceiverImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC707EEB1D11C42A00A45A65 /* ReceiverImageViewController.swift */; };
 		AC733F331CEFB91D00716810 /* MessageBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC733F321CEFB91D00716810 /* MessageBoardViewController.swift */; };
 		AC733F371CEFC8E500716810 /* BuildAGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC733F361CEFC8E500716810 /* BuildAGroupTableViewCell.swift */; };
 		AC79795F1CA4860E00ACBEF8 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC79795E1CA4860E00ACBEF8 /* SignUpViewController.swift */; };
@@ -59,6 +60,7 @@
 		AC01C36D1CB4332A00D1A1CB /* SenderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderCell.swift; sourceTree = "<group>"; };
 		AC01C36F1CB434CF00D1A1CB /* ReceiverCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiverCell.swift; sourceTree = "<group>"; };
 		AC5AABF71D08DC2B00AB73DC /* WelcomeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeTableViewCell.swift; sourceTree = "<group>"; };
+		AC707EEB1D11C42A00A45A65 /* ReceiverImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiverImageViewController.swift; sourceTree = "<group>"; };
 		AC733F321CEFB91D00716810 /* MessageBoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBoardViewController.swift; sourceTree = "<group>"; };
 		AC733F361CEFC8E500716810 /* BuildAGroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildAGroupTableViewCell.swift; path = ../../../.Trash/BuildAGroupTableViewCell.swift; sourceTree = "<group>"; };
 		AC79795E1CA4860E00ACBEF8 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -108,13 +110,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		AC5AABF51D08BB4F00AB73DC /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "New Group";
-			sourceTree = "<group>";
-		};
 		AC8E60861CA1E958004DDC87 = {
 			isa = PBXGroup;
 			children = (
@@ -141,7 +136,6 @@
 				AC8E60CA1CA2497D004DDC87 /* ModelControllers */,
 				AC8E60921CA1E958004DDC87 /* AppDelegate.swift */,
 				AC8E60991CA1E958004DDC87 /* Assets.xcassets */,
-				AC5AABF51D08BB4F00AB73DC /* New Group */,
 				AC8E609B1CA1E958004DDC87 /* LaunchScreen.storyboard */,
 				AC8E609E1CA1E958004DDC87 /* Info.plist */,
 			);
@@ -199,15 +193,16 @@
 		ACBA30AC1CDBEDDE006C3498 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				AC5AABF71D08DC2B00AB73DC /* WelcomeTableViewCell.swift */,
-				AC79795E1CA4860E00ACBEF8 /* SignUpViewController.swift */,
+				AC707EEB1D11C42A00A45A65 /* ReceiverImageViewController.swift */,
 				AC8E60B41CA1F8E3004DDC87 /* LoginViewController.swift */,
+				AC79795E1CA4860E00ACBEF8 /* SignUpViewController.swift */,
 				AC8E60B61CA1F8F9004DDC87 /* WelcomeTableViewController.swift */,
+				AC5AABF71D08DC2B00AB73DC /* WelcomeTableViewCell.swift */,
 				AC8E60B81CA1FDB4004DDC87 /* BuildAGroupViewController.swift */,
+				AC733F361CEFC8E500716810 /* BuildAGroupTableViewCell.swift */,
 				AC01C36F1CB434CF00D1A1CB /* ReceiverCell.swift */,
 				AC01C36D1CB4332A00D1A1CB /* SenderCell.swift */,
 				AC733F321CEFB91D00716810 /* MessageBoardViewController.swift */,
-				AC733F361CEFC8E500716810 /* BuildAGroupTableViewCell.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -286,6 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC8E60C11CA2488F004DDC87 /* FirebaseController.swift in Sources */,
+				AC707EEC1D11C42A00A45A65 /* ReceiverImageViewController.swift in Sources */,
 				AC01C36C1CB376AF00D1A1CB /* Colors.swift in Sources */,
 				AC8E60B51CA1F8E3004DDC87 /* LoginViewController.swift in Sources */,
 				AC8E60D01CA249C8004DDC87 /* GroupController.swift in Sources */,

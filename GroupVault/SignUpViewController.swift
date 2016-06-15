@@ -10,6 +10,8 @@ import UIKit
 
 class SignUpViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    @IBOutlet weak var groupVaultLabel: UILabel!
+    
     @IBOutlet weak var emailTextField: UITextField!
     
     @IBOutlet weak var passwordTextField: UITextField!
@@ -22,6 +24,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
+    @IBOutlet weak var signupButtonOutlet: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,6 +36,26 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         downSwipeGesture()
         upSwipeGesture()
         tapGestureToDismissKeyBoard()
+        
+        // User Interface
+        emailTextField.layer.borderColor = UIColor.lightestGrayColor().CGColor
+        emailTextField.layer.borderWidth = 2.5
+        emailTextField.layer.cornerRadius = 6.0
+        emailTextField.attributedPlaceholder = NSAttributedString(string: "Enter your email address here", attributes: [NSForegroundColorAttributeName: UIColor.lightestGrayColor()])
+        emailTextField.textColor = UIColor.twitterDarkBlueColor()
+        passwordTextField.layer.borderColor = UIColor.lightestGrayColor().CGColor
+        passwordTextField.layer.borderWidth = 2.5
+        passwordTextField.layer.cornerRadius = 6.0
+        passwordTextField.attributedPlaceholder = NSAttributedString(string: "enter password with 6+ characters", attributes: [NSForegroundColorAttributeName: UIColor.lightestGrayColor()])
+        passwordTextField.textColor = UIColor.twitterDarkBlueColor()
+        usernameTextField.layer.borderColor = UIColor.lightestGrayColor().CGColor
+        usernameTextField.layer.borderWidth = 2.5
+        usernameTextField.layer.cornerRadius = 6.0
+        passwordTextField.attributedPlaceholder = NSAttributedString(string: "enter username here", attributes: [NSForegroundColorAttributeName: UIColor.lightestGrayColor()])
+        usernameTextField.textColor = UIColor.twitterDarkBlueColor()
+        signupButtonOutlet.layer.borderColor = UIColor.whiteColor().CGColor
+        signupButtonOutlet.layer.borderWidth = 4.0
+        signupButtonOutlet.layer.cornerRadius = 6.0
         
     }
     
@@ -73,7 +97,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UIImagePicker
                     self.stopFetchingDataIndicator()
                     UserController.createUser(email, password: password, username: newUsersUsername, completion: { (success, user) in
                         if success {
-                            self.almostDoneAlert("Account succefully created!", message: "Now set a profile picture to continue!")
+                            self.almostDoneAlert("Account successfully created!", message: "Now set a profile picture to continue!")
                         } else {
                             self.showSignupAlert("Unable to create account.", message: "Try a different e-mail or find a location with better service")
                         }

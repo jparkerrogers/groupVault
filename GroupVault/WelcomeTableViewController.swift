@@ -24,6 +24,7 @@ class WelcomeTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         if let user = UserController.sharedController.currentUser{
             currentUser = user.identifier!
         }else{
@@ -36,9 +37,15 @@ class WelcomeTableViewController: UITableViewController {
         }
         
         welcomeLabelForUser()
+        
+        ///UserInterface
+        
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor.lightGreyMessageColor()
+        self.navigationController?.navigationBar.tintColor = UIColor.myDarkGrayColor()
+        tableView.separatorColor = UIColor.myDarkGrayColor()
     }
-    
-    
+
     override func viewWillAppear(animated: Bool) {
         
         UserController.observeGroupsForUser(currentUser) { (group) in
@@ -54,6 +61,8 @@ class WelcomeTableViewController: UITableViewController {
     }
     
     @IBAction func toolbarButtonTapped(sender: AnyObject) {
+        
+        
         FirebaseController.base.unauth()
         performSegueWithIdentifier("noUserLoggedIn", sender: nil)
     }

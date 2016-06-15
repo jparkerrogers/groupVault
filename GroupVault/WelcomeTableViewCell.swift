@@ -14,11 +14,18 @@ class WelcomeTableViewCell: UITableViewCell {
     
     @IBOutlet weak var groupNameLabel: UILabel!
     
+//    @IBOutlet weak var blurView: UIView!
+//    
+//    @IBOutlet weak var fetchingDataIndicator: UIActivityIndicatorView!
+    
     var group: Group?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+//        blurView.hidden = true
+//        fetchingDataIndicator.hidesWhenStopped = true
+//        fetchingDataIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.White
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -36,37 +43,30 @@ class WelcomeTableViewCell: UITableViewCell {
                     self.groupImageView.image = UIImage(named: "defaultProfileImage")
                 }
             })
-            
-            
         
         }
+
+        groupImageView.layer.cornerRadius = 5.0
+        groupImageView.clipsToBounds = true
+        groupImageView.contentMode = UIViewContentMode.ScaleAspectFit
+        groupImageView.layer.borderColor = UIColor.myDarkGrayColor().CGColor
+        groupImageView.layer.borderWidth = 0.5
+        groupImageView.alpha = 1.0
         
         self.groupNameLabel.text = group.groupName
         self.group = group
     }
     
-    //static func imageForGroup(group: Group, completion: (image: UIImage?) -> Void) {
-    //
-    //    FirebaseController.dataAtEndpoint("groups/\(group.identifier)/image") { (data) -> Void in
-    //
-    //        if let data = data as? String {
-    //            let image = UIImage(base64: data)
-    //            completion(image: image)
-    //        } else {
-    //            completion(image: nil)
-    //        }
-    //    }
-    //}
-    
-    //            FirebaseController.dataAtEndpoint("groups/\(groupID)/images") { (data) -> Void in
-    //
-    //                if let data = data as? String {
-    //                    let image = UIImage(base64: data)
-    //                    completion(image: image)
-    //                } else {
-    //                    completion(image: nil)
-    //                }
-    //            }
-    //
+//    func startFetchingDataIndicator() {
+//        self.blurView.hidden = false
+//        self.fetchingDataIndicator.startAnimating()
+//        
+//        
+//    }
+//    
+//    func stopFetchingDataIndicator() {
+//        self.blurView.hidden = true
+//        self.fetchingDataIndicator.stopAnimating()
+//    }
     
 }

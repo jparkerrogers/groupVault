@@ -19,6 +19,8 @@ class SenderCell: UITableViewCell, SenderTimerDelegate {
     
     @IBOutlet weak var senderProfileImageView: UIImageView!
     
+    @IBOutlet weak var senderMessageStackView: UIStackView!
+    
     @IBOutlet weak var senderMessageView: UIView!
     
     @IBOutlet weak var senderImageView: UIImageView!
@@ -63,7 +65,7 @@ class SenderCell: UITableViewCell, SenderTimerDelegate {
             senderMessageView.hidden = true
             senderMessageText.hidden = true
             senderUsername.text = message.senderName
-            senderDate.textColor = Color.lightBlueMessageColor()
+            senderDate.textColor = UIColor.lightBlueMessageColor()
             senderDate.text = message.dateString
             senderDate.font = UIFont.boldSystemFontOfSize(12)
             
@@ -75,11 +77,12 @@ class SenderCell: UITableViewCell, SenderTimerDelegate {
         senderProfileImageView.hidden = false
         senderMessageView.layer.masksToBounds = true
         senderMessageView.layer.cornerRadius = 8.0
-        senderMessageView.backgroundColor = UIColor.lightGrayColor()
+        senderMessageView.backgroundColor = UIColor.lightestGrayColor()
         senderMessageView.layer.borderColor = UIColor.blackColor().CGColor
         senderMessageView.layer.borderWidth = 0.5
         senderMessageText.textColor = UIColor.blackColor()
         senderMessageText.text = message.text
+//        senderProfileImageView = UIImageView(frame: CGRectMake(0, 0, 100, 100))
         ImageController.imageForUser(message.senderProfileImage) { (success, image) in
             if success {
                 self.senderProfileImageView.image = image
@@ -89,6 +92,7 @@ class SenderCell: UITableViewCell, SenderTimerDelegate {
         }
         senderUsername.text = message.senderName
         senderDate.text = message.dateString
+        senderDate.textColor = UIColor.myLightBlueColor()
         senderDate.font = UIFont.boldSystemFontOfSize(12)
         
     }
@@ -105,7 +109,8 @@ class SenderCell: UITableViewCell, SenderTimerDelegate {
         senderImageView.layer.borderColor = UIColor.blackColor().CGColor
         senderImageView.layer.borderWidth = 0.5
         senderImageView.image = message.image
-        senderMessageText.hidden = true
+        senderProfileImageView = UIImageView(frame: CGRectMake(0, 0, 100, 100))
+        senderMessageStackView.hidden = true
         ImageController.imageForUser(message.senderProfileImage) { (success, image) in
             if success {
                 self.senderProfileImageView.image = image

@@ -45,6 +45,30 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         downSwipeGesture()
         upSwipeGesture()
         tapGestureToDismissKeyBoard()
+        
+        ///UserInterface
+        
+        emailTextField.layer.borderColor = UIColor.lightestGrayColor().CGColor
+        emailTextField.layer.borderWidth = 2.5
+        emailTextField.layer.cornerRadius = 6.0
+        emailTextField.backgroundColor = UIColor.whiteColor()
+        emailTextField.attributedPlaceholder = NSAttributedString(string: "Enter your email address here", attributes: [NSForegroundColorAttributeName: UIColor.lightestGrayColor()])
+        emailTextField.textColor = UIColor.twitterDarkBlueColor()
+        
+        passwordTextField.layer.borderColor = UIColor.lightestGrayColor().CGColor
+        passwordTextField.layer.borderWidth = 2.5
+        passwordTextField.layer.cornerRadius = 6.0
+        passwordTextField.backgroundColor = UIColor.whiteColor()
+        passwordTextField.attributedPlaceholder = NSAttributedString(string: "enter password with 6+ characters", attributes: [NSForegroundColorAttributeName: UIColor.lightestGrayColor()])
+        passwordTextField.textColor = UIColor.twitterDarkBlueColor()
+        
+        loginButtonOutlet.layer.borderColor = UIColor.whiteColor().CGColor
+        loginButtonOutlet.layer.borderWidth = 4.0
+        loginButtonOutlet.layer.cornerRadius = 6.0
+        
+        createAccountOutlet.layer.borderColor = UIColor.whiteColor().CGColor
+        createAccountOutlet.layer.borderWidth = 4.0
+        createAccountOutlet.layer.cornerRadius = 6.0
     }
     
     
@@ -125,12 +149,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        if passwordTextField.text != "" {
-            self.createAccountOutlet.hidden = true
-            self.buttonStackView.frame = CGRect(x: buttonStackView.frame.origin.x, y: buttonStackView.frame.origin.y, width: 50, height: 20)
-        }
-    }
+//    func textFieldDidBeginEditing(textField: UITextField) {
+//        if passwordTextField.text != "" {
+//            self.createAccountOutlet.hidden = true
+//            self.buttonStackView.frame = CGRect(x: buttonStackView.frame.origin.x, y: buttonStackView.frame.origin.y, width: 50, height: 20)
+//        }
+//    }
     
     func tapGestureToDismissKeyBoard() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.hideKeyboard))
