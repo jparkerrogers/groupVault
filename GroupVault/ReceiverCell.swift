@@ -47,7 +47,7 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
         sendersProfileImageView.layer.borderWidth = 1
         sendersProfileImageView.layer.masksToBounds = false
         sendersProfileImageView.layer.borderColor = UIColor.blackColor().CGColor
-        sendersProfileImageView.layer.cornerRadius = sendersProfileImageView.frame.height/2
+//        sendersProfileImageView.layer.cornerRadius = sendersProfileImageView.frame.height/2
         sendersProfileImageView.clipsToBounds = true
     }
     
@@ -83,7 +83,7 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
             receiverMessageText.hidden = true
             receiverDate.textColor = UIColor.lightGrayColor()
             receiverDate.text = message.dateString
-            receiverDate.font = UIFont.boldSystemFontOfSize(9)
+            receiverDate.font = UIFont.boldSystemFontOfSize(12)
             receiverUserName.font = UIFont.boldSystemFontOfSize(18)
             receiverUserName.text = message.senderName
             receiverUserName.font = UIFont.boldSystemFontOfSize(12)

@@ -109,9 +109,9 @@ class SenderCell: UITableViewCell, SenderTimerDelegate {
         senderImageView.image = message.image
         senderImageView.layer.masksToBounds = true
         senderImageView.contentMode = UIViewContentMode.ScaleAspectFit
-        senderImageView.layer.cornerRadius = 10.0
-        senderImageView.layer.borderColor = UIColor.blackColor().CGColor
-        senderImageView.layer.borderWidth = 0.5
+//        senderImageView.layer.cornerRadius = 10.0
+//        senderImageView.layer.borderColor = UIColor.blackColor().CGColor
+//        senderImageView.layer.borderWidth = 0.5
         senderMessageStackView.hidden = true
         ImageController.imageForUser(message.senderProfileImage) { (success, image) in
             if success {
