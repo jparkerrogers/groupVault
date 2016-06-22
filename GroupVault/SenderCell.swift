@@ -104,14 +104,15 @@ class SenderCell: UITableViewCell, SenderTimerDelegate {
         senderProfileImageView.hidden = false
         senderMessageView.hidden = false
         senderLockAndUnlockButton.hidden = true
+        senderTimerLabel.hidden = false
         senderDate.hidden = false
         senderImageView.hidden = false
         senderImageView.image = message.image
         senderImageView.layer.masksToBounds = true
         senderImageView.contentMode = UIViewContentMode.ScaleAspectFit
-//        senderImageView.layer.cornerRadius = 10.0
-//        senderImageView.layer.borderColor = UIColor.blackColor().CGColor
-//        senderImageView.layer.borderWidth = 0.5
+        senderImageView.layer.cornerRadius = 10.0
+        senderImageView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        senderImageView.layer.borderWidth = 0.5
         senderMessageStackView.hidden = true
         ImageController.imageForUser(message.senderProfileImage) { (success, image) in
             if success {

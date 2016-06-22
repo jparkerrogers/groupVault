@@ -184,6 +184,15 @@ class UserController {
         
     }
     
+    static func searchForUserWith(name: String) -> [User] {
+        var resultsArray: [User] = []
+        for user in resultsArray {
+            if user.username.containsString(name) {
+                resultsArray.append(user)
+            }
+        }
+        return resultsArray
+    }
 }
 
 

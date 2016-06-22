@@ -33,6 +33,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         loadingIndicator.hidesWhenStopped = true
         loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
         profileImage.alpha = 0
+        profileImage.layer.borderWidth = 4.0
+        profileImage.clipsToBounds = true
+        profileImage.layer.borderColor = UIColor.whiteColor().CGColor
+        profileImage.layer.cornerRadius = profileImage.frame.height/2
+        profileImage.contentMode = UIViewContentMode.ScaleAspectFill
         downSwipeGesture()
         upSwipeGesture()
         tapGestureToDismissKeyBoard()
@@ -94,9 +99,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UIImagePicker
                     self.stopFetchingDataIndicator()
                     self.showSignupAlert("Sorry!", message: "That username is being used. Please try another.")
                 } else {
-                    self.stopFetchingDataIndicator()
                     UserController.createUser(email, password: password, username: newUsersUsername, completion: { (success, user) in
                         if success {
+                            self.stopFetchingDataIndicator()
                             self.almostDoneAlert("Account successfully created!", message: "Now set a profile picture to continue!")
                         } else {
                             self.showSignupAlert("Unable to create account.", message: "Try a different e-mail or find a location with better service")

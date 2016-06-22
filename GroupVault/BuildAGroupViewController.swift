@@ -8,9 +8,11 @@
 
 import UIKit
 
-class BuildAGroupViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UISearchBarDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class BuildAGroupViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UISearchBarDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UISearchResultsUpdating {
     
     @IBOutlet weak var groupNameTextField: UITextField!
+    
+    @IBOutlet weak var viewForSearchBar: UIView!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -26,6 +28,8 @@ class BuildAGroupViewController: UIViewController, UITableViewDelegate, UITableV
     var currentUser = UserController.sharedController.currentUser
     var user: User?
     var group: Group?
+    
+    var searchController: UISearchController?
     
     
     override func viewDidLoad() {
@@ -65,16 +69,57 @@ class BuildAGroupViewController: UIViewController, UITableViewDelegate, UITableV
         createGroup()
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func setupSearchController() {
+        let resultsController = UIStoryboard(name: "MainOne", bundle: nil).instantiateViewControllerWithIdentifier("filteredResults")
+        searchController = UISearchController(searchResultsController: resultsController)
+        guard let searchController = searchController else { return }
+        searchController.searchBar.placeholder = "Search users"
+        searchController.searchResultsUpdater = self
+        searchController.definesPresentationContext = true
+        searchController.hidesNavigationBarDuringPresentation = true
         
-        dispatch_async(dispatch_get_main_queue()) {
-            self.filteredDataSource = self.usersDataSource.filter({$0.username.containsString(searchText.lowercaseString)})
-            
-            self.tableView.reloadData()
-        }
+        let searchBar = searchController.searchBar
+        self.viewForSearchBar.addSubview(searchBar)
+        //        searchBar.frame = viewForSearchBar.frame
+        //        view.addSubview(searchBar)
         
-        //        self.tableView.reloadData()
+        var constraint = NSLayoutConstraint(item: searchBar, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1.0, constant: 0.0)
+        view.addConstraint(constraint)
+        
+        //Width Parth 2 of 2
+        constraint = NSLayoutConstraint(item: searchBar, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .Trailing, multiplier: 1.0, constant: 0.0)
+        view.addConstraint(constraint)
+        
+        //Y Position
+        constraint = NSLayoutConstraint(item: searchBar, attribute: .Top, relatedBy: .Equal, toItem: groupImageView, attribute: .Bottom, multiplier: 1.0, constant: 20.0)
+        view.addConstraint(constraint)
+        
+        //Height
+        constraint = NSLayoutConstraint(item: searchBar, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 39.0)
+        view.addConstraint(constraint)
+        
+        constraint = NSLayoutConstraint(item: searchBar, attribute: .Bottom, relatedBy: .Equal, toItem: tableView, attribute: .Top, multiplier: 1.0, constant: -2.0)
+        view.addConstraint(constraint)
+        
     }
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        guard let text = searchController.searchBar.text,
+            resultsController = searchController.searchResultsController as? FilteredResultsViewController else { return }
+        resultsController.filteredDataSource = UserController.searchForUserWith(text)
+        resultsController.filteredTableView.reloadData()
+    }
+    
+//    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+//        
+//        dispatch_async(dispatch_get_main_queue()) {
+//            self.filteredDataSource = self.usersDataSource.filter({$0.username.containsString(searchText.lowercaseString)})
+//            
+//            self.tableView.reloadData()
+//        }
+//        
+//        //        self.tableView.reloadData()
+//    }
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -193,6 +238,8 @@ class BuildAGroupViewController: UIViewController, UITableViewDelegate, UITableV
     func stopFetchingDataIndicator() {
         self.blurryView.hidden = true
         self.fetchAllUsersIndicator.stopAnimating()
+        self.setupSearchController()
+        
     }
     
     //    func almostDoneAlert(title: String, message: String) {
@@ -250,6 +297,10 @@ class BuildAGroupViewController: UIViewController, UITableViewDelegate, UITableV
                         self.groupNameTextField.hidden = true
                         self.groupImageView.alpha = 1.0
                         self.groupImageView.image = image
+                        self.groupImageView.layer.borderWidth = 4.0
+                        self.groupImageView.layer.borderColor = UIColor.whiteColor().CGColor
+                        self.groupImageView.clipsToBounds = true
+                        self.groupImageView.contentMode = UIViewContentMode.ScaleAspectFill
                         }, completion: { (_) in
                             sleep(1)
                             self.navigationController?.popViewControllerAnimated(true)

@@ -46,9 +46,10 @@ class WelcomeTableViewCell: UITableViewCell {
         
         }
 
-        groupImageView.layer.cornerRadius = 5.0
-        groupImageView.clipsToBounds = true
-        groupImageView.contentMode = UIViewContentMode.ScaleAspectFit
+
+        groupImageView.layer.masksToBounds = true
+//        groupImageView.clipsToBounds = true
+        groupImageView.contentMode = UIViewContentMode.ScaleAspectFill
         groupImageView.layer.borderColor = UIColor.myDarkGrayColor().CGColor
         groupImageView.layer.borderWidth = 0.5
         groupImageView.alpha = 1.0

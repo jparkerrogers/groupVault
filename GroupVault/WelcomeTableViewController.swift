@@ -56,7 +56,7 @@ class WelcomeTableViewController: UITableViewController {
             self.tableView.reloadData()
             
             if self.groups.count == 0 {
-                self.showLoginAlert("You aren't in any groups Yet!", message: "Tap the "+" to make a group!")
+                self.showLoginAlert("You aren't in any groups yet!", message: "Tap the top right corner to make a group!")
             }
         }
         

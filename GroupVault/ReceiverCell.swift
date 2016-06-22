@@ -49,6 +49,7 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
         sendersProfileImageView.layer.borderColor = UIColor.blackColor().CGColor
 //        sendersProfileImageView.layer.cornerRadius = sendersProfileImageView.frame.height/2
         sendersProfileImageView.clipsToBounds = true
+        
     }
     
     
@@ -127,24 +128,19 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
         
         message.timer?.delegate = self
         
-        //        let imageVC: UIViewController = ReceiverImageViewController()
-        //        self.presentViewController(imageVC, animated: true, completion: nil)
-        //        ReceiverImageViewController.sharedController.updateImage(message)
-        //        UINavigationController.pop
-        
         
         message.timer?.delegate = self
         receiverViewForImageView.hidden = false
         receiverTextMessageStackView.hidden = true
         lockAndUnlockButton.hidden = true
-        timerLabel.hidden = true
+        timerLabel.hidden = false
         receiverImageView.hidden = false
-        receiverImageView.layer.masksToBounds = true
+        receiverImageView.layer.masksToBounds = false
         receiverImageView.layer.cornerRadius = 10.0
-//        receiverImageView.layer.borderColor = UIColor.blackColor().CGColor
-//        receiverImageView.layer.borderWidth = 0.5
+        receiverImageView.layer.borderColor = UIColor.blackColor().CGColor
+        receiverImageView.layer.borderWidth = 0.5
         receiverImageView.image = message.image
-        receiverImageView.clipsToBounds = true
+//        receiverImageView.clipsToBounds = true
 //        receiverImageView.contentMode = UIViewContentMode.ScaleToFill
         receiverImageView.contentMode = UIViewContentMode.ScaleAspectFit
 //        receiverImageView.contentMode = UIViewContentMode.ScaleAspectFill
@@ -192,7 +188,7 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
             receiverMessageText.hidden = true
             receiverDate.textColor = UIColor.lightGrayColor()
             receiverDate.text = message.dateString ?? ""
-            receiverDate.font = UIFont.boldSystemFontOfSize(9)
+            receiverDate.font = UIFont.boldSystemFontOfSize(12)
             receiverUserName.font = UIFont.boldSystemFontOfSize(18)
             receiverUserName.text = message.senderName ?? ""
             receiverUserName.font = UIFont.boldSystemFontOfSize(12)

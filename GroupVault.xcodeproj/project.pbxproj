@@ -10,6 +10,8 @@
 		AC01C36C1CB376AF00D1A1CB /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC01C36B1CB376AF00D1A1CB /* Colors.swift */; };
 		AC01C36E1CB4332A00D1A1CB /* SenderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC01C36D1CB4332A00D1A1CB /* SenderCell.swift */; };
 		AC01C3701CB434CF00D1A1CB /* ReceiverCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC01C36F1CB434CF00D1A1CB /* ReceiverCell.swift */; };
+		AC1621B51D19A0DE005BC6B4 /* SearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1621B41D19A0DE005BC6B4 /* SearchResultsTableViewController.swift */; };
+		AC1621D91D19D0C6005BC6B4 /* FilteredResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1621D81D19D0C6005BC6B4 /* FilteredResultsViewController.swift */; };
 		AC5AABF81D08DC2B00AB73DC /* WelcomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5AABF71D08DC2B00AB73DC /* WelcomeTableViewCell.swift */; };
 		AC707EEC1D11C42A00A45A65 /* ReceiverImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC707EEB1D11C42A00A45A65 /* ReceiverImageViewController.swift */; };
 		AC733F331CEFB91D00716810 /* MessageBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC733F321CEFB91D00716810 /* MessageBoardViewController.swift */; };
@@ -38,7 +40,6 @@
 		ACAE62E61D01F965003D8E30 /* MainOne.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACAE62E41D01F965003D8E30 /* MainOne.storyboard */; };
 		ACB676871CECDEBD00BFE3FB /* ImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB676861CECDEBD00BFE3FB /* ImageController.swift */; };
 		ACBA30AA1CDBEDB3006C3498 /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBA30A91CDBEDB3006C3498 /* Timer.swift */; };
-		ACEE3B671CF418D80072C3FE /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEE3B661CF418D80072C3FE /* Image.swift */; };
 		ACEE3B691CF41D2A0072C3FE /* ZImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEE3B681CF41D2A0072C3FE /* ZImageController.swift */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +60,8 @@
 		AC01C36B1CB376AF00D1A1CB /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		AC01C36D1CB4332A00D1A1CB /* SenderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderCell.swift; sourceTree = "<group>"; };
 		AC01C36F1CB434CF00D1A1CB /* ReceiverCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiverCell.swift; sourceTree = "<group>"; };
+		AC1621B41D19A0DE005BC6B4 /* SearchResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewController.swift; sourceTree = "<group>"; };
+		AC1621D81D19D0C6005BC6B4 /* FilteredResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredResultsViewController.swift; sourceTree = "<group>"; };
 		AC5AABF71D08DC2B00AB73DC /* WelcomeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeTableViewCell.swift; sourceTree = "<group>"; };
 		AC707EEB1D11C42A00A45A65 /* ReceiverImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiverImageViewController.swift; sourceTree = "<group>"; };
 		AC733F321CEFB91D00716810 /* MessageBoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBoardViewController.swift; sourceTree = "<group>"; };
@@ -89,7 +92,6 @@
 		ACAE62E51D01F965003D8E30 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainOne.storyboard; sourceTree = "<group>"; };
 		ACB676861CECDEBD00BFE3FB /* ImageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageController.swift; sourceTree = "<group>"; };
 		ACBA30A91CDBEDB3006C3498 /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
-		ACEE3B661CF418D80072C3FE /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		ACEE3B681CF41D2A0072C3FE /* ZImageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZImageController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -133,7 +135,6 @@
 				ACAE62E41D01F965003D8E30 /* MainOne.storyboard */,
 				AC8E60C21CA24895004DDC87 /* Models */,
 				AC8E60C51CA248C9004DDC87 /* Controllers */,
-				AC8E60CA1CA2497D004DDC87 /* ModelControllers */,
 				AC8E60921CA1E958004DDC87 /* AppDelegate.swift */,
 				AC8E60991CA1E958004DDC87 /* Assets.xcassets */,
 				AC8E609B1CA1E958004DDC87 /* LaunchScreen.storyboard */,
@@ -160,7 +161,6 @@
 			children = (
 				AC8E60BA1CA24786004DDC87 /* User.swift */,
 				AC8E60BC1CA24794004DDC87 /* Message.swift */,
-				ACEE3B661CF418D80072C3FE /* Image.swift */,
 				AC8E60BE1CA247A1004DDC87 /* Group.swift */,
 				AC01C36B1CB376AF00D1A1CB /* Colors.swift */,
 				ACBA30A91CDBEDB3006C3498 /* Timer.swift */,
@@ -171,6 +171,7 @@
 		AC8E60C51CA248C9004DDC87 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				AC8E60CA1CA2497D004DDC87 /* ModelControllers */,
 				ACBA30AC1CDBEDDE006C3498 /* ViewControllers */,
 			);
 			name = Controllers;
@@ -193,6 +194,8 @@
 		ACBA30AC1CDBEDDE006C3498 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				AC1621D81D19D0C6005BC6B4 /* FilteredResultsViewController.swift */,
+				AC1621B41D19A0DE005BC6B4 /* SearchResultsTableViewController.swift */,
 				AC707EEB1D11C42A00A45A65 /* ReceiverImageViewController.swift */,
 				AC8E60B41CA1F8E3004DDC87 /* LoginViewController.swift */,
 				AC79795E1CA4860E00ACBEF8 /* SignUpViewController.swift */,
@@ -288,13 +291,14 @@
 				AC8E60CC1CA249B1004DDC87 /* UserController.swift in Sources */,
 				AC8E60BD1CA24794004DDC87 /* Message.swift in Sources */,
 				AC733F371CEFC8E500716810 /* BuildAGroupTableViewCell.swift in Sources */,
-				ACEE3B671CF418D80072C3FE /* Image.swift in Sources */,
+				AC1621B51D19A0DE005BC6B4 /* SearchResultsTableViewController.swift in Sources */,
 				AC8E60931CA1E958004DDC87 /* AppDelegate.swift in Sources */,
 				AC8E60B91CA1FDB4004DDC87 /* BuildAGroupViewController.swift in Sources */,
 				AC79795F1CA4860E00ACBEF8 /* SignUpViewController.swift in Sources */,
 				ACBA30AA1CDBEDB3006C3498 /* Timer.swift in Sources */,
 				AC733F331CEFB91D00716810 /* MessageBoardViewController.swift in Sources */,
 				AC7BF68A1CE0025A0043C40F /* TimerController.swift in Sources */,
+				AC1621D91D19D0C6005BC6B4 /* FilteredResultsViewController.swift in Sources */,
 				ACEE3B691CF41D2A0072C3FE /* ZImageController.swift in Sources */,
 				AC5AABF81D08DC2B00AB73DC /* WelcomeTableViewCell.swift in Sources */,
 				ACB676871CECDEBD00BFE3FB /* ImageController.swift in Sources */,

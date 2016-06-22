@@ -62,18 +62,22 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         
         //User Interface
         
-        mockTextView.layer.borderWidth = 2.0
-        mockTextView.layer.borderColor = UIColor.myDarkGrayColor().CGColor
+        mockTextView.layer.borderWidth = 2.5
+        mockTextView.layer.borderColor = UIColor.lightGrayColor().CGColor
         mockTextView.layer.cornerRadius = 6.0
         mockSendButton.layer.cornerRadius = 6.0
+        mockSendButton.layer.borderColor = UIColor.whiteColor().CGColor
+        mockSendButton.layer.borderWidth = 2.0
         mockKeyboardView.backgroundColor = UIColor.myLightBlueColor()
         
         trueTextView.layer.borderWidth = 2.0
-        trueTextView.layer.borderColor = UIColor.myDarkGrayColor().CGColor
+        trueTextView.layer.borderColor = UIColor.lightGrayColor().CGColor
         trueTextView.layer.cornerRadius = 6.0
         trueSendButton.layer.cornerRadius = 6.0
         trueSendButton.backgroundColor = UIColor(white: 0.75, alpha: 0.25)
-        trueKeyboardView.backgroundColor = UIColor(white: 0.75, alpha: 0.25)
+        trueSendButton.layer.borderColor = UIColor.whiteColor().CGColor
+        trueSendButton.layer.borderWidth = 2.0
+        trueKeyboardView.backgroundColor = UIColor.myLightBlueColor()
         
         self.navigationController?.navigationBar.tintColor = UIColor.lightGreyMessageColor()
         self.navigationController?.navigationBar.barTintColor = UIColor.myDarkGrayColor()
@@ -116,12 +120,14 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
     @IBAction func sendButtonTapped(sender: AnyObject) {
         
         if trueTextView.text != "" {
-            createMessage()
             trueTextView.resignFirstResponder()
             mockTextView.resignFirstResponder()
+            mockKeyboardView.hidden = false
+            trueKeyboardView.hidden = true
+            createMessage()
             trueTextView.text = ""
             mockTextView.text = ""
-            mockKeyboardView.hidden = false
+            
         }
 //        mockTextView.resignFirstResponder()
 //        trueTextView.text = ""
@@ -252,7 +258,7 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
             
             if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil {
                 cameraAlert.addAction(UIAlertAction(title: "Take Photo or Video", style: .Default, handler: { (_) in
-                    imagePicker.allowsEditing = false
+                    imagePicker.allowsEditing = true
                     imagePicker.sourceType = .Camera
                     imagePicker.cameraCaptureMode = .Photo
                     self.presentViewController(imagePicker, animated: true, completion: nil)
