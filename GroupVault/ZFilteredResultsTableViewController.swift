@@ -14,8 +14,9 @@ class ZFilteredResultsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
+        tableView.allowsSelection = false
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,7 +32,7 @@ class ZFilteredResultsTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("filteredUserCell", forIndexPath: indexPath) as! BuildAGroupTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("filteredUserCell", forIndexPath: indexPath) as! FilteredBuildAGroupTableViewCell
         
         cell.filteredDelegate = self
         
@@ -55,7 +56,7 @@ class ZFilteredResultsTableViewController: UITableViewController {
 
 extension ZFilteredResultsTableViewController: FilteredBuildAGroupTableViewCellDelegate {
     
-    func filteredAddUserButtonTapped(sender: BuildAGroupTableViewCell) {
+    func filteredAddUserButtonTapped(sender: FilteredBuildAGroupTableViewCell) {
         
         let indexPath = tableView.indexPathForCell(sender)
         

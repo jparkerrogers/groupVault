@@ -1061,21 +1061,21 @@
                         <constraints>
                             <constraint firstItem="B7I-QF-nqS" firstAttribute="top" secondItem="TeL-mS-0tj" secondAttribute="bottom" constant="8" id="1pc-wG-j7H"/>
                             <constraint firstItem="B7I-QF-nqS" firstAttribute="centerX" secondItem="xOs-fO-c4b" secondAttribute="centerX" id="8WZ-bx-TES"/>
-                            <constraint firstItem="CBV-ML-qTf" firstAttribute="leading" secondItem="rHw-z8-E8s" secondAttribute="leading" id="Gjf-zy-SCf"/>
-                            <constraint firstItem="CBV-ML-qTf" firstAttribute="baseline" secondItem="rHw-z8-E8s" secondAttribute="baseline" id="Hiq-YC-INW"/>
                             <constraint firstItem="rHw-z8-E8s" firstAttribute="leading" secondItem="xOs-fO-c4b" secondAttribute="leadingMargin" constant="-20" id="Nsy-kx-4d8"/>
-                            <constraint firstItem="frC-lc-KTp" firstAttribute="centerY" secondItem="CBV-ML-qTf" secondAttribute="centerY" id="Rch-of-phV"/>
+                            <constraint firstItem="CBV-ML-qTf" firstAttribute="leading" secondItem="rHw-z8-E8s" secondAttribute="leading" id="UIo-XZ-P6I"/>
                             <constraint firstAttribute="trailingMargin" secondItem="rHw-z8-E8s" secondAttribute="trailing" constant="-20" id="VV2-6U-Hvg"/>
                             <constraint firstItem="rHw-z8-E8s" firstAttribute="top" secondItem="pha-pD-3mI" secondAttribute="bottom" constant="55" id="X5f-LA-DIl"/>
                             <constraint firstItem="pha-pD-3mI" firstAttribute="leading" secondItem="xOs-fO-c4b" secondAttribute="leadingMargin" id="YMZ-oF-oZH"/>
                             <constraint firstItem="pha-pD-3mI" firstAttribute="centerX" secondItem="xOs-fO-c4b" secondAttribute="centerX" id="Yid-6c-YzR"/>
                             <constraint firstItem="rHw-z8-E8s" firstAttribute="top" secondItem="B7I-QF-nqS" secondAttribute="bottom" constant="47" id="aFO-2U-uaY"/>
-                            <constraint firstItem="frC-lc-KTp" firstAttribute="centerX" secondItem="CBV-ML-qTf" secondAttribute="centerX" id="chf-lV-uYD"/>
+                            <constraint firstItem="CBV-ML-qTf" firstAttribute="baseline" secondItem="rHw-z8-E8s" secondAttribute="baseline" id="aRF-Vc-ih5"/>
+                            <constraint firstItem="CBV-ML-qTf" firstAttribute="trailing" secondItem="rHw-z8-E8s" secondAttribute="trailing" id="iW4-Pf-bWM"/>
+                            <constraint firstItem="frC-lc-KTp" firstAttribute="centerX" secondItem="CBV-ML-qTf" secondAttribute="centerX" id="oBM-CH-gX6"/>
+                            <constraint firstItem="CBV-ML-qTf" firstAttribute="top" secondItem="rHw-z8-E8s" secondAttribute="top" id="oG5-dB-ZPN"/>
                             <constraint firstAttribute="bottomMargin" secondItem="rHw-z8-E8s" secondAttribute="bottom" id="pKw-bq-jM8"/>
-                            <constraint firstItem="CBV-ML-qTf" firstAttribute="top" secondItem="rHw-z8-E8s" secondAttribute="top" id="qvj-jC-1RM"/>
                             <constraint firstItem="rHw-z8-E8s" firstAttribute="centerX" secondItem="pha-pD-3mI" secondAttribute="centerX" id="sVr-Pz-m7B"/>
                             <constraint firstItem="pha-pD-3mI" firstAttribute="top" secondItem="TeL-mS-0tj" secondAttribute="bottom" constant="35" id="tIt-au-yLM"/>
-                            <constraint firstItem="CBV-ML-qTf" firstAttribute="trailing" secondItem="rHw-z8-E8s" secondAttribute="trailing" id="xOP-mb-eqz"/>
+                            <constraint firstItem="frC-lc-KTp" firstAttribute="centerY" secondItem="CBV-ML-qTf" secondAttribute="centerY" id="tzr-gD-rVt"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="ftJ-zc-aK6" appends="YES" id="Cyt-zD-RFe"/>
@@ -1115,7 +1115,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="filteredUserCell" rowHeight="53" id="Iwy-Ha-i4c">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="filteredUserCell" rowHeight="53" id="Iwy-Ha-i4c" customClass="FilteredBuildAGroupTableViewCell" customModule="GroupVault" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="320" height="53"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Iwy-Ha-i4c" id="eNP-NB-EmE">
@@ -1148,7 +1148,7 @@
                                                             </constraints>
                                                             <state key="normal" backgroundImage="addUser"/>
                                                             <connections>
-                                                                <action selector="addUserButtonTapped:" destination="l2S-vA-s77" eventType="touchUpInside" id="REi-xz-Alz"/>
+                                                                <action selector="addUserButtonTapped:" destination="Iwy-Ha-i4c" eventType="touchUpInside" id="18X-Cs-iSV"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -1169,6 +1169,11 @@
                                         <constraint firstItem="ufR-cF-jl7" firstAttribute="top" secondItem="eNP-NB-EmE" secondAttribute="top" constant="1" id="le6-9x-r0D"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="addUserButton" destination="Chi-Xk-tTZ" id="GuA-rK-7UF"/>
+                                    <outlet property="userLabel" destination="6F3-Ec-jKU" id="26g-Yy-fWa"/>
+                                    <outlet property="userProfileImageView" destination="ftd-0d-xEn" id="QtQ-2X-H99"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

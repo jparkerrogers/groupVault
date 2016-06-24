@@ -34,7 +34,7 @@ class BuildAGroupViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        tableView.allowsSelection = false
         self.blurryView.hidden = true
         self.fetchAllUsersIndicator.hidesWhenStopped = true
         self.fetchAllUsersIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
@@ -56,6 +56,8 @@ class BuildAGroupViewController: UIViewController, UITableViewDelegate, UITableV
         
         navigationItem.title = "BuildAGroup"
         setupSearchController()
+        
+        print("hey man")
     }
     
     
@@ -78,22 +80,49 @@ class BuildAGroupViewController: UIViewController, UITableViewDelegate, UITableV
         searchController.searchBar.sizeToFit()
         searchController.searchResultsUpdater = self
         searchController.definesPresentationContext = true
-        searchController.hidesNavigationBarDuringPresentation = true
+        searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = true
+        searchController.searchBar.barTintColor = UIColor.lightGrayColor()
+        searchController.searchBar.backgroundColor = UIColor.myLightBlueColor()
+        searchController.searchBar.tintColor = UIColor.myLightBlueColor()
+        self.tableView.tableHeaderView = searchController.searchBar
         
-        
-        let searchBar = searchController.searchBar
-        self.tableView.tableHeaderView = searchBar
         definesPresentationContext = true
         
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
+        
         guard let searchTerm = searchController.searchBar.text?.lowercaseString,
             resultsController = searchController.searchResultsController as? ZFilteredResultsTableViewController else { return }
-        
         resultsController.filteredDataSource = self.usersDataSource.filter({ $0.username.lowercaseString.containsString(searchTerm)})
+        searchController.hidesNavigationBarDuringPresentation = false
+        self.view.backgroundColor = UIColor.lightGrayColor()
+        
         resultsController.tableView.reloadData()
+        SearchBarSearchTextEmpty()
+        changeViewForSearchBar()
+        
+    }
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        tableView.reloadData()
+        print("the cancel button was tapped")
+    }
+    
+    func SearchBarSearchTextEmpty() {
+        if searchController?.searchBar.text == "" {
+            tableView.reloadData()
+            print("the search text is empty")
+        }
+    }
+    
+    func changeViewForSearchBar() {
+    
+        guard let searchBar = searchController?.searchBar else {return}
+        searchBar.backgroundColor = UIColor.myLightBlueColor()
+        view.backgroundColor = UIColor.lightGrayColor()
+        searchBar.barTintColor = UIColor.blackColor()
+        
         
     }
     

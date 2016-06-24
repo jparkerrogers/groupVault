@@ -10,7 +10,6 @@
 		AC01C36C1CB376AF00D1A1CB /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC01C36B1CB376AF00D1A1CB /* Colors.swift */; };
 		AC01C36E1CB4332A00D1A1CB /* SenderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC01C36D1CB4332A00D1A1CB /* SenderCell.swift */; };
 		AC01C3701CB434CF00D1A1CB /* ReceiverCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC01C36F1CB434CF00D1A1CB /* ReceiverCell.swift */; };
-		AC1621D91D19D0C6005BC6B4 /* FilteredResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1621D81D19D0C6005BC6B4 /* FilteredResultsViewController.swift */; };
 		AC1BF6661D1BB29300DC25BB /* ZFilteredResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1BF6651D1BB29300DC25BB /* ZFilteredResultsTableViewController.swift */; };
 		AC2DC9831D1DAF5300050D12 /* FilteredBuildAGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2DC9821D1DAF5300050D12 /* FilteredBuildAGroupTableViewCell.swift */; };
 		AC5AABF81D08DC2B00AB73DC /* WelcomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5AABF71D08DC2B00AB73DC /* WelcomeTableViewCell.swift */; };
@@ -61,7 +60,6 @@
 		AC01C36B1CB376AF00D1A1CB /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		AC01C36D1CB4332A00D1A1CB /* SenderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderCell.swift; sourceTree = "<group>"; };
 		AC01C36F1CB434CF00D1A1CB /* ReceiverCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiverCell.swift; sourceTree = "<group>"; };
-		AC1621D81D19D0C6005BC6B4 /* FilteredResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredResultsViewController.swift; sourceTree = "<group>"; };
 		AC1BF6651D1BB29300DC25BB /* ZFilteredResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZFilteredResultsTableViewController.swift; sourceTree = "<group>"; };
 		AC2DC9821D1DAF5300050D12 /* FilteredBuildAGroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredBuildAGroupTableViewCell.swift; sourceTree = "<group>"; };
 		AC5AABF71D08DC2B00AB73DC /* WelcomeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeTableViewCell.swift; sourceTree = "<group>"; };
@@ -196,7 +194,6 @@
 		ACBA30AC1CDBEDDE006C3498 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				AC1621D81D19D0C6005BC6B4 /* FilteredResultsViewController.swift */,
 				AC1BF6651D1BB29300DC25BB /* ZFilteredResultsTableViewController.swift */,
 				AC707EEB1D11C42A00A45A65 /* ReceiverImageViewController.swift */,
 				AC8E60B41CA1F8E3004DDC87 /* LoginViewController.swift */,
@@ -300,7 +297,6 @@
 				ACBA30AA1CDBEDB3006C3498 /* Timer.swift in Sources */,
 				AC733F331CEFB91D00716810 /* MessageBoardViewController.swift in Sources */,
 				AC7BF68A1CE0025A0043C40F /* TimerController.swift in Sources */,
-				AC1621D91D19D0C6005BC6B4 /* FilteredResultsViewController.swift in Sources */,
 				ACEE3B691CF41D2A0072C3FE /* ZImageController.swift in Sources */,
 				AC5AABF81D08DC2B00AB73DC /* WelcomeTableViewCell.swift in Sources */,
 				ACB676871CECDEBD00BFE3FB /* ImageController.swift in Sources */,
