@@ -145,7 +145,7 @@ class SenderCell: UITableViewCell, SenderTimerDelegate {
 }
 
 protocol SenderTableViewCellDelegate: class {
-    func senderMessageSent(sender: SenderCell)
+    func senderMessageButtonTapped(sender: SenderCell)
     
 }
 

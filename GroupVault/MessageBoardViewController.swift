@@ -19,6 +19,8 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
     var message: Message?
     let currentUser = UserController.sharedController.currentUser
     
+    var UIImageVC: UIViewController?
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var imageAccessoryView: UIImageView!
     
@@ -413,13 +415,19 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         view.addGestureRecognizer(tapGesture)
     }
     
+//    func setUpForImageView() {
+//    let imageVC = UIStoryboard(name: "MainOne", bundle: nil).instantiateViewControllerWithIdentifier("imageController")
+//    UIImageVC = UISearchController(searchResultsController: imageVC)
+//        
+//    }
+    
 }
 
 
 
 extension MessageBoardViewController: SenderTableViewCellDelegate, RecieverTableViewCellDelegate {
     
-    func senderMessageSent(sender: SenderCell) {
+    func senderMessageButtonTapped(sender: SenderCell) {
         
         
     }

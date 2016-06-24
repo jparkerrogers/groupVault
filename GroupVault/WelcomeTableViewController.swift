@@ -38,9 +38,6 @@ class WelcomeTableViewController: UITableViewController {
         
         welcomeLabelForUser()
         
-        
-        
-        
         ///UserInterface
         
         self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
