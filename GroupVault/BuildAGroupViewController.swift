@@ -23,7 +23,7 @@ class BuildAGroupViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var groupImageView: UIImageView!
     
     var usersDataSource: [User] = []
-    var filteredDataSource: [User] = []
+//    var filteredDataSource: [User] = []
     var selectedUserIDs: [String] = []
     var currentUser = UserController.sharedController.currentUser
     var user: User?
@@ -55,6 +55,7 @@ class BuildAGroupViewController: UIViewController, UITableViewDelegate, UITableV
         }
         
         navigationItem.title = "BuildAGroup"
+        setupSearchController()
     }
     
     
@@ -74,74 +75,50 @@ class BuildAGroupViewController: UIViewController, UITableViewDelegate, UITableV
         searchController = UISearchController(searchResultsController: resultsController)
         guard let searchController = searchController else { return }
         searchController.searchBar.placeholder = "Search users"
+        searchController.searchBar.sizeToFit()
         searchController.searchResultsUpdater = self
         searchController.definesPresentationContext = true
         searchController.hidesNavigationBarDuringPresentation = true
+        searchController.dimsBackgroundDuringPresentation = true
+        
         
         let searchBar = searchController.searchBar
-        self.viewForSearchBar.addSubview(searchBar)
-        //        searchBar.frame = viewForSearchBar.frame
-        //        view.addSubview(searchBar)
-        
-        var constraint = NSLayoutConstraint(item: searchBar, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1.0, constant: 0.0)
-        view.addConstraint(constraint)
-        
-        //Width Parth 2 of 2
-        constraint = NSLayoutConstraint(item: searchBar, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .Trailing, multiplier: 1.0, constant: 0.0)
-        view.addConstraint(constraint)
-        
-        //Y Position
-        constraint = NSLayoutConstraint(item: searchBar, attribute: .Top, relatedBy: .Equal, toItem: groupImageView, attribute: .Bottom, multiplier: 1.0, constant: 20.0)
-        view.addConstraint(constraint)
-        
-        //Height
-        constraint = NSLayoutConstraint(item: searchBar, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 39.0)
-        view.addConstraint(constraint)
-        
-        constraint = NSLayoutConstraint(item: searchBar, attribute: .Bottom, relatedBy: .Equal, toItem: tableView, attribute: .Top, multiplier: 1.0, constant: -2.0)
-        view.addConstraint(constraint)
+        self.tableView.tableHeaderView = searchBar
+        definesPresentationContext = true
         
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        guard let text = searchController.searchBar.text,
-            resultsController = searchController.searchResultsController as? FilteredResultsViewController else { return }
-        resultsController.filteredDataSource = UserController.searchForUserWith(text)
-        resultsController.filteredTableView.reloadData()
+        guard let searchTerm = searchController.searchBar.text?.lowercaseString,
+            resultsController = searchController.searchResultsController as? ZFilteredResultsTableViewController else { return }
+        
+        resultsController.filteredDataSource = self.usersDataSource.filter({ $0.username.lowercaseString.containsString(searchTerm)})
+        resultsController.tableView.reloadData()
+        
     }
-    
-//    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-//        
-//        dispatch_async(dispatch_get_main_queue()) {
-//            self.filteredDataSource = self.usersDataSource.filter({$0.username.containsString(searchText.lowercaseString)})
-//            
-//            self.tableView.reloadData()
-//        }
-//        
-//        //        self.tableView.reloadData()
-//    }
-    
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         
-        if filteredDataSource.count > 0 {
-            return filteredDataSource.count
-        } else {
-            return usersDataSource.count
-        }
-        /// return the number of users
+//        if filteredDataSource.count > 0 {
+//            return filteredDataSource.count
+//        } else {
+//            return usersDataSource.count
+//        }
+//        /// return the number of users
+        
+        return usersDataSource.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        
         
         let cell = tableView.dequeueReusableCellWithIdentifier("userCell", forIndexPath: indexPath) as! BuildAGroupTableViewCell
         
         cell.delegate = self
         
-        let user = filteredDataSource.count > 0 ? filteredDataSource[indexPath.row]:usersDataSource[indexPath.row]
+//        let user = filteredDataSource.count > 0 ? filteredDataSource[indexPath.row]:usersDataSource[indexPath.row]
+        
+        let user = usersDataSource[indexPath.row]
         
         cell.userViewOnCell(user)
         
@@ -333,7 +310,6 @@ class BuildAGroupViewController: UIViewController, UITableViewDelegate, UITableV
 extension BuildAGroupViewController: BuildAGroupTableViewCellDelegate {
     
     
-    
     func addUserButtonTapped(sender: BuildAGroupTableViewCell) {
         
         let indexPath = tableView.indexPathForCell(sender)
@@ -351,12 +327,7 @@ extension BuildAGroupViewController: BuildAGroupTableViewCellDelegate {
     
     func userStatus(indexPath: NSIndexPath) -> User {
         
-        if filteredDataSource.count > 0 {
-            return filteredDataSource[indexPath.row]
-        } else {
-            return usersDataSource[indexPath.row]
-        }
-        
+        return usersDataSource[indexPath.row]
         
     }
     

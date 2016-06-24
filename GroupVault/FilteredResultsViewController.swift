@@ -46,7 +46,7 @@ class FilteredResultsViewController: UIViewController, UITableViewDelegate, UITa
         
         print("Shalom")
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("userCell", forIndexPath: indexPath) as! BuildAGroupTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("monkey", forIndexPath: indexPath) as! BuildAGroupTableViewCell
         
         cell.delegate = self
         
@@ -81,7 +81,7 @@ class FilteredResultsViewController: UIViewController, UITableViewDelegate, UITa
 
 extension FilteredResultsViewController: BuildAGroupTableViewCellDelegate {
     
-    func addUserButtonTapped(sender: BuildAGroupTableViewCell) {
+    func filteredAddUserButtonTapped(sender: BuildAGroupTableViewCell) {
         
         let indexPath = filteredTableView.indexPathForCell(sender)
         
@@ -93,6 +93,10 @@ extension FilteredResultsViewController: BuildAGroupTableViewCellDelegate {
         print(user.selectedForGroup)
         
         filteredTableView.reloadData()
+        
+    }
+    
+    func addUserButtonTapped(sender: BuildAGroupTableViewCell) {
         
     }
     
