@@ -41,7 +41,6 @@ class MessageController {
         })
         
     }
-    
     ///THIS HAS BEEN MY BIGGEST ACCOMPLISHMENT IN CODE
     
     static func userViewedMessage(message: Message, completion: (success: Bool, message: Message?) -> Void) {
@@ -61,7 +60,6 @@ class MessageController {
         
         completion(success: true, message: message)
     }
-    
     
     static func createMessage(sender: String, senderName: String, senderProfileImage: String, groupID: String, text: String?, image: UIImage?, timer: Timer?, viewedBy: [String], completion: (success: Bool, message: Message) -> Void) {
         

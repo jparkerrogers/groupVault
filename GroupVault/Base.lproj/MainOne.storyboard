@@ -685,6 +685,9 @@
                                                         <constraint firstAttribute="width" constant="31" id="ES7-0G-pfZ"/>
                                                         <constraint firstAttribute="height" constant="30" id="ovW-8u-JJQ"/>
                                                     </constraints>
+                                                    <connections>
+                                                        <action selector="showMessageButtonTapped:" destination="CE0-Kr-cTV" eventType="touchUpInside" id="dfY-eO-jXs"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yOV-Ks-OL2" userLabel="senderTimerLabel">
                                                     <rect key="frame" x="215" y="69" width="97" height="21"/>

@@ -52,7 +52,37 @@ class SenderCell: UITableViewCell, SenderTimerDelegate {
         // Configure the view for the selected state
     }
     
+    @IBAction func showMessageButtonTapped(sender: AnyObject) {
+        
+        if let delegate = delegate {
+            delegate.senderMessageButtonTapped(self)
+        }
+    }
+    
+    
     func lockImageViewForSender() {
+        if let message = self.message {
+            senderTimerLabel.hidden = true
+            senderProfileImageView.hidden = false
+            senderLockAndUnlockButton.hidden = false
+            senderLockAndUnlockButton.setBackgroundImage(UIImage(named: "lockedLock"), forState: .Normal)
+            ImageController.imageForUser(message.senderProfileImage) { (success, image) in
+                if success {
+                    self.senderProfileImageView.image = image
+                } else {
+                    self.senderProfileImageView.image = UIImage(named: "defaultProfileImage")
+                }
+            }
+            senderMessageView.hidden = true
+            senderMessageText.hidden = true
+            senderUsername.text = message.senderName
+            senderDate.textColor = UIColor.lightBlueMessageColor()
+            senderDate.text = message.dateString
+            senderDate.font = UIFont.boldSystemFontOfSize(12)
+        }
+    }
+    
+    func goBackToLockImageView() {
         if let message = self.message {
             senderTimerLabel.hidden = true
             senderProfileImageView.hidden = false
@@ -76,13 +106,21 @@ class SenderCell: UITableViewCell, SenderTimerDelegate {
     }
     
     func messageViewForSender(message: Message) {
+        
         message.timer?.senderDelegate = self
+        senderProfileImageView.hidden = true
+        senderTimerLabel.hidden = false
         senderProfileImageView.hidden = false
+        senderImageView.hidden = true
+        senderMessageView.hidden = false
         senderMessageView.layer.masksToBounds = true
-        senderMessageView.layer.cornerRadius = 8.0
         senderMessageView.backgroundColor = UIColor.lightestGrayColor()
+        senderMessageView.layer.cornerRadius = 8.0
         senderMessageView.layer.borderColor = UIColor.blackColor().CGColor
         senderMessageView.layer.borderWidth = 0.5
+        senderMessageView.hidden = false
+        senderMessageStackView.hidden = false
+        senderMessageText.hidden = false
         senderMessageText.textColor = UIColor.blackColor()
         senderMessageText.text = message.text
         ImageController.imageForUser(message.senderProfileImage) { (success, image) in
@@ -92,11 +130,13 @@ class SenderCell: UITableViewCell, SenderTimerDelegate {
                 self.senderProfileImageView.image = UIImage(named: "defaultProfileImage")
             }
         }
-        senderUsername.text = message.senderName
-        senderDate.text = message.dateString
         senderDate.textColor = UIColor.myLightBlueColor()
+        senderDate.text = message.dateString
         senderDate.font = UIFont.boldSystemFontOfSize(12)
-        
+        senderUsername.font = UIFont.boldSystemFontOfSize(12)
+        senderUsername.text = message.senderName
+        senderUsername.font = UIFont.boldSystemFontOfSize(12)
+        senderLockAndUnlockButton.hidden = true
     }
     
     func imageViewForSender(message: Message) {
@@ -131,7 +171,7 @@ class SenderCell: UITableViewCell, SenderTimerDelegate {
         
         if let message = self.message {
             MessageController.userViewedMessage(message, completion: { (success, message) in
-                self.lockImageViewForSender()
+                self.goBackToLockImageView()
                 
             })
         }

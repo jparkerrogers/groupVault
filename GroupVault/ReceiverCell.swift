@@ -47,7 +47,6 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
         sendersProfileImageView.layer.borderWidth = 1
         sendersProfileImageView.layer.masksToBounds = false
         sendersProfileImageView.layer.borderColor = UIColor.blackColor().CGColor
-//        sendersProfileImageView.layer.cornerRadius = sendersProfileImageView.frame.height/2
         sendersProfileImageView.clipsToBounds = true
         
     }
@@ -87,6 +86,36 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
             receiverDate.font = UIFont.boldSystemFontOfSize(12)
             receiverUserName.font = UIFont.boldSystemFontOfSize(18)
             receiverUserName.text = message.senderName
+            receiverUserName.font = UIFont.boldSystemFontOfSize(12)
+        }
+    }
+    
+    func goBackToLockImageView() {
+        if let message = self.message {
+            receiverViewForImageView.hidden = true
+            timerLabel.hidden = true
+            lockAndUnlockButton.hidden = false
+            lockAndUnlockButton.setBackgroundImage(UIImage(named: "unlockedLock"), forState: .Normal)
+            sendersProfileImageView.hidden = false
+            ImageController.imageForUser(message.senderProfileImage) { (success, image) in
+                if success {
+                    self.sendersProfileImageView.image = image
+                } else {
+                    self.sendersProfileImageView.image = UIImage(named: "defaultProfileImage")
+                }
+            }
+            receiverTextMessageStackView.hidden = false
+            sendersProfileImageView.hidden = false
+            receiverUserName.hidden = false
+            receiverDate.hidden = false
+            receiverImageView.hidden = true
+            receiverMessageView.hidden = true
+            receiverMessageText.hidden = true
+            receiverDate.textColor = UIColor.lightGrayColor()
+            receiverDate.text = message.dateString ?? ""
+            receiverDate.font = UIFont.boldSystemFontOfSize(12)
+            receiverUserName.font = UIFont.boldSystemFontOfSize(18)
+            receiverUserName.text = message.senderName ?? ""
             receiverUserName.font = UIFont.boldSystemFontOfSize(12)
         }
     }
@@ -140,20 +169,13 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
         receiverImageView.layer.borderColor = UIColor.blackColor().CGColor
         receiverImageView.layer.borderWidth = 0.5
         receiverImageView.image = message.image
-//        receiverImageView.clipsToBounds = true
-//        receiverImageView.contentMode = UIViewContentMode.ScaleToFill
+        //        receiverImageView.clipsToBounds = true
+        //        receiverImageView.contentMode = UIViewContentMode.ScaleToFill
         receiverImageView.contentMode = UIViewContentMode.ScaleAspectFit
-//        receiverImageView.contentMode = UIViewContentMode.ScaleAspectFill
+        //        receiverImageView.contentMode = UIViewContentMode.ScaleAspectFill
         
         
     }
-    
-    func updateTimerLabel() {
-        
-        timerLabel.text = message?.timer?.timeAsString()
-    }
-    
-    
     
     func messageTimerComplete() {
         if let message = self.message {
@@ -164,47 +186,14 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
         message?.save()
     }
     
-    
-    func goBackToLockImageView() {
-        if let message = self.message {
-            receiverViewForImageView.hidden = true
-            timerLabel.hidden = true
-            lockAndUnlockButton.hidden = false
-            lockAndUnlockButton.setBackgroundImage(UIImage(named: "unlockedLock"), forState: .Normal)
-            sendersProfileImageView.hidden = false
-            ImageController.imageForUser(message.senderProfileImage) { (success, image) in
-                if success {
-                    self.sendersProfileImageView.image = image
-                } else {
-                    self.sendersProfileImageView.image = UIImage(named: "defaultProfileImage")
-                }
-            }
-            receiverTextMessageStackView.hidden = false
-            sendersProfileImageView.hidden = false
-            receiverUserName.hidden = false
-            receiverDate.hidden = false
-            receiverImageView.hidden = true
-            receiverMessageView.hidden = true
-            receiverMessageText.hidden = true
-            receiverDate.textColor = UIColor.lightGrayColor()
-            receiverDate.text = message.dateString ?? ""
-            receiverDate.font = UIFont.boldSystemFontOfSize(12)
-            receiverUserName.font = UIFont.boldSystemFontOfSize(18)
-            receiverUserName.text = message.senderName ?? ""
-            receiverUserName.font = UIFont.boldSystemFontOfSize(12)
-        }
+    func updateTimerLabel() {
+        
+        timerLabel.text = message?.timer?.timeAsString()
     }
 }
 
 protocol RecieverTableViewCellDelegate: class {
     func receiverLockImagebuttonTapped(sender: ReceiverCell)
     
-    
-    
 }
 
-extension ReceiverCell {
-    func updateWithMessage(message: Message) {
-        
-    }
-}

@@ -131,10 +131,6 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
             mockTextView.text = ""
             
         }
-//        mockTextView.resignFirstResponder()
-//        trueTextView.text = ""
-//        mockTextView.text = ""
-//        mockKeyboardView.hidden = false
     }
     
     func createMessage() {
@@ -177,18 +173,14 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         if message.sender == self.currentUser.identifier {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("senderCell", forIndexPath: indexPath) as! SenderCell
+            cell.delegate = self
             cell.message = message
-            if let viewedByArray = message.viewedBy {
-                if viewedByArray.contains(message.sender) {
-                    cell.lockImageViewForSender()
-                }
-                else if message.image != nil {
-                    TimerController.sharedInstance.startTimer(message.timer ?? Timer())
-                    cell.imageViewForSender(message)
-                } else {
-                    TimerController.sharedInstance.startTimer(message.timer ?? Timer())
-                    cell.messageViewForSender(message)
-                }
+            guard let currentUser = UserController.sharedController.currentUser.identifier,
+                viewedByArray = message.viewedBy else { return cell }
+            if viewedByArray.contains(currentUser) {
+                cell.goBackToLockImageView()
+            } else {
+                cell.lockImageViewForSender()
             }
             return cell
         } else {
@@ -429,7 +421,18 @@ extension MessageBoardViewController: SenderTableViewCellDelegate, RecieverTable
     
     func senderMessageButtonTapped(sender: SenderCell) {
         
-        
+        guard let message = sender.message,
+            currentUserID = self.currentUser.identifier,
+            viewedByArray = message.viewedBy else { return }
+        if viewedByArray.contains(currentUserID) {
+            sender.goBackToLockImageView()
+        } else if message.image != nil {
+            TimerController.sharedInstance.startTimer(message.timer ?? Timer())
+            sender.imageViewForSender(message)
+        } else if message.text != "" {
+            TimerController.sharedInstance.startTimer(message.timer ?? Timer())
+            sender.messageViewForSender(message)
+        }
     }
     
     func receiverLockImagebuttonTapped(sender: ReceiverCell) {
