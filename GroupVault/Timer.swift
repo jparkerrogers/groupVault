@@ -20,8 +20,9 @@ class Timer {
         }
     }
     
-    weak var delegate: TimerDelegate?
+    weak var receiverDelegate: ReceiverTimerDelegate?
     weak var senderDelegate: SenderTimerDelegate?
+    weak var imageDelegate: ImageTimerDelegate?
     
     var isOn: Bool {
         if endDate == nil {
@@ -37,20 +38,22 @@ class Timer {
     }
     
     func secondTick() {
-        delegate?.updateTimerLabel()
+        receiverDelegate?.updateTimerLabel()
         senderDelegate?.updateTimerLabel()
+        imageDelegate?.updateImageTimerLabel()
         
         /// the delegate method is searching for the word delegate or the word "updateTimerLabel"
     }
     
     func complete() {
-        delegate?.messageTimerComplete()
+        receiverDelegate?.messageTimerComplete()
         senderDelegate?.messageTimerComplete()
+        imageDelegate?.messageImageTimerComplete()
     }
     
 }
 
-protocol TimerDelegate: class {
+protocol ReceiverTimerDelegate: class {
     func updateTimerLabel()
     func messageTimerComplete()
 }
@@ -58,4 +61,9 @@ protocol TimerDelegate: class {
 protocol SenderTimerDelegate: class {
     func updateTimerLabel()
     func messageTimerComplete()
+}
+
+protocol ImageTimerDelegate: class {
+    func updateImageTimerLabel()
+    func messageImageTimerComplete()
 }

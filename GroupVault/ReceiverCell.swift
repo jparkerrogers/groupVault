@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ReceiverCell: UITableViewCell, TimerDelegate {
+class ReceiverCell: UITableViewCell, ReceiverTimerDelegate {
     
     static let sharedCell = ReceiverCell()
     
@@ -18,8 +18,6 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
     
     @IBOutlet weak var sendersProfileImageView: UIImageView!
     
-    @IBOutlet weak var receiverImageView: UIImageView!
-    
     @IBOutlet weak var receiverMessageView: UIView!
     
     @IBOutlet weak var receiverMessageText: UILabel!
@@ -27,8 +25,6 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
     @IBOutlet weak var lockAndUnlockButton: UIButton!
     
     @IBOutlet weak var timerLabel: UILabel!
-    
-    @IBOutlet weak var receiverViewForImageView: UIView!
     
     @IBOutlet weak var receiverTextMessageStackView: UIStackView!
     
@@ -60,7 +56,7 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
     
     @IBAction func showMessageButtonTapped(sender: AnyObject) {
         if let delegate = delegate {
-            delegate.receiverLockImagebuttonTapped(self)
+            delegate.receiverLockImageButtonTapped(self)
         }
     }
     
@@ -77,8 +73,6 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
                     self.sendersProfileImageView.image = UIImage(named: "defaultProfileImage")
                 }
             }
-            receiverViewForImageView.hidden = true
-            receiverImageView.hidden = true
             receiverMessageView.hidden = true
             receiverMessageText.hidden = true
             receiverDate.textColor = UIColor.lightGrayColor()
@@ -92,7 +86,6 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
     
     func goBackToLockImageView() {
         if let message = self.message {
-            receiverViewForImageView.hidden = true
             timerLabel.hidden = true
             lockAndUnlockButton.hidden = false
             lockAndUnlockButton.setBackgroundImage(UIImage(named: "unlockedLock"), forState: .Normal)
@@ -108,7 +101,6 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
             sendersProfileImageView.hidden = false
             receiverUserName.hidden = false
             receiverDate.hidden = false
-            receiverImageView.hidden = true
             receiverMessageView.hidden = true
             receiverMessageText.hidden = true
             receiverDate.textColor = UIColor.lightGrayColor()
@@ -122,11 +114,9 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
     
     func messageViewForReceiver(message: Message) {
         
-        message.timer?.delegate = self
-        receiverViewForImageView.hidden = true
+        message.timer?.receiverDelegate = self
         timerLabel.hidden = false
         sendersProfileImageView.hidden = false
-        receiverImageView.hidden = false
         receiverMessageView.hidden = false
         receiverMessageView.layer.masksToBounds = true
         receiverMessageView.backgroundColor = UIColor.lightBlueMessageColor()
@@ -153,29 +143,29 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
         
     }
     
-    func imageViewForReceiver(message: Message) {
-        
-        message.timer?.delegate = self
-        
-        
-        message.timer?.delegate = self
-        receiverViewForImageView.hidden = false
-        receiverTextMessageStackView.hidden = true
-        lockAndUnlockButton.hidden = true
-        timerLabel.hidden = false
-        receiverImageView.hidden = false
-        receiverImageView.layer.masksToBounds = false
-        receiverImageView.layer.cornerRadius = 10.0
-        receiverImageView.layer.borderColor = UIColor.blackColor().CGColor
-        receiverImageView.layer.borderWidth = 0.5
-        receiverImageView.image = message.image
-        //        receiverImageView.clipsToBounds = true
-        //        receiverImageView.contentMode = UIViewContentMode.ScaleToFill
-        receiverImageView.contentMode = UIViewContentMode.ScaleAspectFit
-        //        receiverImageView.contentMode = UIViewContentMode.ScaleAspectFill
-        
-        
-    }
+//    func imageViewForReceiver(message: Message) {
+//        
+//        message.timer?.delegate = self
+//        
+//        
+//        message.timer?.delegate = self
+//        receiverViewForImageView.hidden = false
+//        receiverTextMessageStackView.hidden = true
+//        lockAndUnlockButton.hidden = true
+//        timerLabel.hidden = false
+//        receiverImageView.hidden = false
+//        receiverImageView.layer.masksToBounds = false
+//        receiverImageView.layer.cornerRadius = 10.0
+//        receiverImageView.layer.borderColor = UIColor.blackColor().CGColor
+//        receiverImageView.layer.borderWidth = 0.5
+//        receiverImageView.image = message.image
+//        //        receiverImageView.clipsToBounds = true
+//        //        receiverImageView.contentMode = UIViewContentMode.ScaleToFill
+//        receiverImageView.contentMode = UIViewContentMode.ScaleAspectFit
+//        //        receiverImageView.contentMode = UIViewContentMode.ScaleAspectFill
+//        
+//        
+//    }
     
     func messageTimerComplete() {
         if let message = self.message {
@@ -193,7 +183,7 @@ class ReceiverCell: UITableViewCell, TimerDelegate {
 }
 
 protocol RecieverTableViewCellDelegate: class {
-    func receiverLockImagebuttonTapped(sender: ReceiverCell)
+    func receiverLockImageButtonTapped(sender: ReceiverCell)
     
 }
 

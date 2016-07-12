@@ -196,7 +196,6 @@
 		ACBA30AC1CDBEDDE006C3498 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				AC55BEDC1D1DEE0F001D38D2 /* ImageViewController.swift */,
 				AC1BF6651D1BB29300DC25BB /* ZFilteredResultsTableViewController.swift */,
 				AC707EEB1D11C42A00A45A65 /* ReceiverImageViewController.swift */,
 				AC8E60B41CA1F8E3004DDC87 /* LoginViewController.swift */,
@@ -208,6 +207,7 @@
 				AC2DC9821D1DAF5300050D12 /* FilteredBuildAGroupTableViewCell.swift */,
 				AC01C36F1CB434CF00D1A1CB /* ReceiverCell.swift */,
 				AC01C36D1CB4332A00D1A1CB /* SenderCell.swift */,
+				AC55BEDC1D1DEE0F001D38D2 /* ImageViewController.swift */,
 				AC733F321CEFB91D00716810 /* MessageBoardViewController.swift */,
 			);
 			name = ViewControllers;

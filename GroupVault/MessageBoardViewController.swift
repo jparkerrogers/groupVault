@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
+class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, ImageTimerDelegate {
     
     static let sharedController = MessageBoardViewController()
     
@@ -22,8 +22,6 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
     var UIImageVC: UIViewController?
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet var imageAccessoryView: UIImageView!
-    
     
     @IBOutlet weak var mockKeyboardView: UIView!
     @IBOutlet weak var mockTextView: UITextView!
@@ -36,6 +34,12 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
     @IBOutlet weak var trueSendButton: UIButton!
     @IBOutlet weak var trueTextView: UITextView!
     
+    @IBOutlet var imageAccessoryView: UIView!
+    @IBOutlet weak var imageAccessoryImageView: UIImageView!
+    @IBOutlet weak var imageAccessoryCancelButton: UIButton!
+    @IBOutlet weak var imageAccessoryTimerLabel: UILabel!
+    @IBOutlet weak var mockViewForInputAccessoryView: UIView!
+
     
     @IBOutlet weak var mockKeyboardViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
@@ -84,6 +88,8 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         self.navigationController?.navigationBar.tintColor = UIColor.lightGreyMessageColor()
         self.navigationController?.navigationBar.barTintColor = UIColor.myDarkGrayColor()
         
+        mockViewForInputAccessoryView.hidden = true
+        
         
     }
     
@@ -113,10 +119,6 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
                 TimerController.sharedInstance.stopTimer(message.timer ?? Timer())
             }
         }
-    }
-    @IBAction func showMessageButtonTapped(sender: AnyObject) {
-        
-        
     }
     
     @IBAction func sendButtonTapped(sender: AnyObject) {
@@ -218,7 +220,7 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
                 self.stopFetchingDataIndicator()
                 if messages.count > self.groupMessages.count {
                     self.groupMessages = messages.sort({ $0.identifier < $1.identifier })
-                    dispatch_async(dispatch_get_main_queue(), { 
+                    dispatch_async(dispatch_get_main_queue(), {
                         self.tableView.reloadData()
                         self.scrollToBottom(true)
                     })
@@ -367,16 +369,16 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         scrollToBottom(false)
     }
     
-//    func imageShown(notification: NSNotification) {
-//        var message: Message?
-//        self.message = message
-//        var newImage = UIImageView(image: message!.image)
-//        newImage = UIImageView(frame: self.blurryView.frame)
-//        newImage.layer.borderColor = UIColor.blackColor().CGColor
-//        newImage.userInteractionEnabled = true
-//        self.view.addSubview(newImage)
-//        
-//    }
+    //    func imageShown(notification: NSNotification) {
+    //        var message: Message?
+    //        self.message = message
+    //        var newImage = UIImageView(image: message!.image)
+    //        newImage = UIImageView(frame: self.blurryView.frame)
+    //        newImage.layer.borderColor = UIColor.blackColor().CGColor
+    //        newImage.userInteractionEnabled = true
+    //        self.view.addSubview(newImage)
+    //
+    //    }
     
     
     
@@ -390,13 +392,6 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         fetchingGroupMessagesIndicator.stopAnimating()
     }
     
-    
-    func imageAccessoryViewConfiguration(message: Message) {
-        
-        imageAccessoryView.frame = blurryView.frame
-        imageAccessoryView.image = message.image
-    }
-    
     func tapGestureToDismissFullscreenImage() {
         view.removeFromSuperview()
     }
@@ -407,12 +402,55 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         view.addGestureRecognizer(tapGesture)
     }
     
-//    func setUpForImageView() {
-//    let imageVC = UIStoryboard(name: "MainOne", bundle: nil).instantiateViewControllerWithIdentifier("imageController")
-//    UIImageVC = UISearchController(searchResultsController: imageVC)
-//        
+//    func setUpForImageView(message: Message) {
+//        let imageVC = UIStoryboard(name: "MainOne", bundle: nil).instantiateViewControllerWithIdentifier("imageController")
+//        self.presentViewController(imageVC, animated: false, completion: nil)
+//        let accessingImageVCProperties = imageVC as? ImageViewController
+//        accessingImageVCProperties?.updateWith(message)
 //    }
     
+    
+    func presentImage(message: Message) {
+        self.message = message
+        self.imageAccessoryImageView.image = message.image
+        self.imageAccessoryImageView.contentMode = UIViewContentMode.ScaleAspectFit
+        self.imageAccessoryCancelButton.backgroundColor = UIColor.myLightBlueColor()
+        self.imageAccessoryCancelButton.layer.borderColor = UIColor.whiteColor().CGColor
+        self.imageAccessoryCancelButton.layer.borderWidth = 0.5
+        self.imageAccessoryTimerLabel.backgroundColor = UIColor.myLightBlueColor()
+        self.imageAccessoryTimerLabel.layer.borderColor = UIColor.whiteColor().CGColor
+        self.imageAccessoryTimerLabel.layer.borderWidth = 0.5
+        self.imageAccessoryView.frame = self.mockViewForInputAccessoryView.frame
+        self.imageAccessoryView.layer.borderColor = UIColor.blackColor().CGColor
+        self.imageAccessoryView.layer.borderWidth = 1.5
+        self.imageAccessoryImageView.backgroundColor = UIColor.myLightBlueColor()
+        self.imageAccessoryCancelButton.hidden = false
+        self.view.addSubview(imageAccessoryView)
+        
+        
+    }
+    
+    
+    //    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    //
+    //        if segue.identifier == "toViewMessageImage" {
+    //
+    //            let imageVC = segue.destinationViewController as? ImageViewController
+    //
+    //            _ = imageVC!.view
+    //
+    //            let cell = sender as? UITableViewCell
+    //
+    //            let indexPath = tableView.indexPathForCell(cell!)
+    //
+    //            if let selectedRow = indexPath?.row {
+    //
+    //                let message = self.groupMessages[selectedRow]
+    //                imageVC?.updateWith(message)
+    //
+    //            }
+    //        }
+    //    }
 }
 
 
@@ -428,14 +466,14 @@ extension MessageBoardViewController: SenderTableViewCellDelegate, RecieverTable
             sender.goBackToLockImageView()
         } else if message.image != nil {
             TimerController.sharedInstance.startTimer(message.timer ?? Timer())
-            sender.imageViewForSender(message)
+            self.presentImage(message)
         } else if message.text != "" {
             TimerController.sharedInstance.startTimer(message.timer ?? Timer())
             sender.messageViewForSender(message)
         }
     }
     
-    func receiverLockImagebuttonTapped(sender: ReceiverCell) {
+    func receiverLockImageButtonTapped(sender: ReceiverCell) {
         
         guard let message = sender.message,
             currentUserID = self.currentUser.identifier,
@@ -444,7 +482,6 @@ extension MessageBoardViewController: SenderTableViewCellDelegate, RecieverTable
             sender.goBackToLockImageView()
         } else if message.image != nil {
             TimerController.sharedInstance.startTimer(message.timer ?? Timer())
-            sender.imageViewForReceiver(message)
         } else if message.text != "" {
             TimerController.sharedInstance.startTimer(message.timer ?? Timer())
             sender.messageViewForReceiver(message)
