@@ -421,15 +421,34 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         self.imageAccessoryTimerLabel.layer.borderColor = UIColor.whiteColor().CGColor
         self.imageAccessoryTimerLabel.layer.borderWidth = 0.5
         self.imageAccessoryView.frame = self.mockViewForInputAccessoryView.frame
-        self.imageAccessoryView.layer.borderColor = UIColor.blackColor().CGColor
-        self.imageAccessoryView.layer.borderWidth = 1.5
-        self.imageAccessoryImageView.backgroundColor = UIColor.myLightBlueColor()
-        self.imageAccessoryCancelButton.hidden = false
+        self.imageAccessoryView.layer.borderColor = UIColor.whiteColor().CGColor
+        self.imageAccessoryView.layer.borderWidth = 5.0
+        self.imageAccessoryView.backgroundColor = UIColor.blackColor()
+        self.imageAccessoryView.tag = 100
+        self.blurryView.hidden = false
         self.view.addSubview(imageAccessoryView)
-        
-        
+        self.navigationController?.navigationBar.userInteractionEnabled = false
+        message.timer?.imageDelegate = self
     }
     
+    func dismissImage() {
+        let viewWithTag = self.view.viewWithTag(100)
+        viewWithTag?.removeFromSuperview()
+    }
+    
+    func updateImageTimerLabel() {
+        self.imageAccessoryTimerLabel.text = message?.timer?.timeAsString()
+    }
+    
+    func messageImageTimerComplete() {
+        if let message = self.message {
+            MessageController.userViewedMessage(message, completion: { (success, message) in
+                self.dismissImage()
+            })
+        }
+        message?.save()
+        tableView.reloadData()
+    }
     
     //    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     //
@@ -482,6 +501,7 @@ extension MessageBoardViewController: SenderTableViewCellDelegate, RecieverTable
             sender.goBackToLockImageView()
         } else if message.image != nil {
             TimerController.sharedInstance.startTimer(message.timer ?? Timer())
+            self.presentImage(message)
         } else if message.text != "" {
             TimerController.sharedInstance.startTimer(message.timer ?? Timer())
             sender.messageViewForReceiver(message)

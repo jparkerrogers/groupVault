@@ -12,7 +12,6 @@
 		AC01C3701CB434CF00D1A1CB /* ReceiverCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC01C36F1CB434CF00D1A1CB /* ReceiverCell.swift */; };
 		AC1BF6661D1BB29300DC25BB /* ZFilteredResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1BF6651D1BB29300DC25BB /* ZFilteredResultsTableViewController.swift */; };
 		AC2DC9831D1DAF5300050D12 /* FilteredBuildAGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2DC9821D1DAF5300050D12 /* FilteredBuildAGroupTableViewCell.swift */; };
-		AC55BEDD1D1DEE0F001D38D2 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55BEDC1D1DEE0F001D38D2 /* ImageViewController.swift */; };
 		AC5AABF81D08DC2B00AB73DC /* WelcomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5AABF71D08DC2B00AB73DC /* WelcomeTableViewCell.swift */; };
 		AC707EEC1D11C42A00A45A65 /* ReceiverImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC707EEB1D11C42A00A45A65 /* ReceiverImageViewController.swift */; };
 		AC733F331CEFB91D00716810 /* MessageBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC733F321CEFB91D00716810 /* MessageBoardViewController.swift */; };
@@ -63,7 +62,6 @@
 		AC01C36F1CB434CF00D1A1CB /* ReceiverCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiverCell.swift; sourceTree = "<group>"; };
 		AC1BF6651D1BB29300DC25BB /* ZFilteredResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZFilteredResultsTableViewController.swift; sourceTree = "<group>"; };
 		AC2DC9821D1DAF5300050D12 /* FilteredBuildAGroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredBuildAGroupTableViewCell.swift; sourceTree = "<group>"; };
-		AC55BEDC1D1DEE0F001D38D2 /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		AC5AABF71D08DC2B00AB73DC /* WelcomeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeTableViewCell.swift; sourceTree = "<group>"; };
 		AC707EEB1D11C42A00A45A65 /* ReceiverImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiverImageViewController.swift; sourceTree = "<group>"; };
 		AC733F321CEFB91D00716810 /* MessageBoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBoardViewController.swift; sourceTree = "<group>"; };
@@ -207,7 +205,6 @@
 				AC2DC9821D1DAF5300050D12 /* FilteredBuildAGroupTableViewCell.swift */,
 				AC01C36F1CB434CF00D1A1CB /* ReceiverCell.swift */,
 				AC01C36D1CB4332A00D1A1CB /* SenderCell.swift */,
-				AC55BEDC1D1DEE0F001D38D2 /* ImageViewController.swift */,
 				AC733F321CEFB91D00716810 /* MessageBoardViewController.swift */,
 			);
 			name = ViewControllers;
@@ -292,7 +289,6 @@
 				AC8E60B51CA1F8E3004DDC87 /* LoginViewController.swift in Sources */,
 				AC8E60D01CA249C8004DDC87 /* GroupController.swift in Sources */,
 				AC8E60CC1CA249B1004DDC87 /* UserController.swift in Sources */,
-				AC55BEDD1D1DEE0F001D38D2 /* ImageViewController.swift in Sources */,
 				AC8E60BD1CA24794004DDC87 /* Message.swift in Sources */,
 				AC733F371CEFC8E500716810 /* BuildAGroupTableViewCell.swift in Sources */,
 				AC8E60931CA1E958004DDC87 /* AppDelegate.swift in Sources */,
