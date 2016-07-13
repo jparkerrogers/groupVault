@@ -136,34 +136,6 @@ class SenderCell: UITableViewCell, SenderTimerDelegate {
         senderLockAndUnlockButton.hidden = true
     }
     
-//    func imageViewForSender(message: Message) {
-//        message.timer?.senderDelegate = self
-//        senderProfileImageView.hidden = false
-//        senderMessageView.hidden = false
-//        senderLockAndUnlockButton.hidden = true
-//        senderTimerLabel.hidden = false
-//        senderDate.hidden = false
-//        senderImageView.hidden = false
-//        senderImageView.image = message.image
-//        senderImageView.layer.masksToBounds = true
-//        senderImageView.contentMode = UIViewContentMode.ScaleAspectFit
-//        senderImageView.layer.cornerRadius = 10.0
-//        senderImageView.layer.borderColor = UIColor.lightGrayColor().CGColor
-//        senderImageView.layer.borderWidth = 0.5
-//        senderMessageStackView.hidden = true
-//        ImageController.imageForUser(message.senderProfileImage) { (success, image) in
-//            if success {
-//                self.senderProfileImageView.image = image
-//            } else {
-//                self.senderProfileImageView.image = UIImage(named: "defaultProfileImage")
-//            }
-//        }
-//        senderUsername.text = message.senderName
-//        senderDate.text = message.dateString
-//        senderDate.font = UIFont.boldSystemFontOfSize(12)
-//        
-//    }
-    
     func messageTimerComplete() {
         
         if let message = self.message {

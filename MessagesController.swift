@@ -12,7 +12,7 @@ import Firebase
 
 class MessageController {
     
-    var message: Message?
+    static var message: Message?
     
     static let sharedController = MessageController()
     
@@ -73,11 +73,34 @@ class MessageController {
 
         message.save()
         
-        
         completion(success: true, message: message)
         
     }
+    
+    static func deleteGroupMessageBasedOnDate(message: Message) {
+        
+        self.message = message
+        //let currentUser = UserController.sharedController.currentUser.identifier
+        let messageDate = message.dateString
+        
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MM-dd"
+        
+        let currentDate = formatter
+        
+        if currentDate == messageDate {
+            message.delete()
+        }
+    }
+    
+    static func deleteGroupMessagesBasedOnViews(message: Message) {
+        
+    }
 }
+
+
+
+
 
 
 

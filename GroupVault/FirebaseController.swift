@@ -76,8 +76,4 @@ extension FirebaseType {
             
         }
     }
-    
-    
-
-
 }

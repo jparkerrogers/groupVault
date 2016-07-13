@@ -39,7 +39,7 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
     @IBOutlet weak var imageAccessoryCancelButton: UIButton!
     @IBOutlet weak var imageAccessoryTimerLabel: UILabel!
     @IBOutlet weak var mockViewForInputAccessoryView: UIView!
-
+    
     
     @IBOutlet weak var mockKeyboardViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
@@ -94,6 +94,7 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
     }
     
     override func viewWillAppear(animated: Bool) {
+        
         let cameraTapGesture = UITapGestureRecognizer(target: self, action: #selector(MessageBoardViewController.cameraImageTapped))
         trueCameraButton.userInteractionEnabled = true
         trueCameraButton.addGestureRecognizer(cameraTapGesture)
@@ -101,6 +102,16 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         let mockCameraTapGesture = UITapGestureRecognizer(target: self, action: #selector(MessageBoardViewController.cameraImageTapped))
         mockCameraImageButton.userInteractionEnabled = true
         mockCameraImageButton.addGestureRecognizer(mockCameraTapGesture)
+        
+        imageAccessoryImageView.userInteractionEnabled = true
+        
+        let imageDownSwipe = UISwipeGestureRecognizer(target: imageAccessoryImageView, action: #selector(MessageBoardViewController.imageSwiped))
+        imageDownSwipe.direction = .Down
+        self.imageAccessoryImageView.addGestureRecognizer(imageDownSwipe)
+        
+        let imageUpSwipe = UISwipeGestureRecognizer(target: imageAccessoryImageView, action: #selector(MessageBoardViewController.imageSwiped))
+        imageUpSwipe.direction = .Up
+        self.imageAccessoryImageView.addGestureRecognizer(imageUpSwipe)
         
     }
     
@@ -125,7 +136,7 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         
         if trueTextView.text != "" {
             trueTextView.resignFirstResponder()
-            mockTextView.resignFirstResponder()
+            //mockTextView.resignFirstResponder()
             mockKeyboardView.hidden = false
             trueKeyboardView.hidden = true
             createMessage()
@@ -134,6 +145,7 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
             
         }
     }
+    
     
     func createMessage() {
         guard let currentUser = self.currentUser,
@@ -198,6 +210,19 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
                 cell.lockImageViewForReceiver()
             }
             return cell
+        }
+    }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.Delete) {
+            let selectedMessage = self.groupMessages[indexPath.row]
+            groupMessages.removeAtIndex(indexPath.row)
+            selectedMessage.delete()
+            tableView.reloadData()
         }
     }
     
@@ -308,7 +333,53 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         }
     }
     
+    func presentImage(message: Message) {
+        self.message = message
+        self.imageAccessoryImageView.image = message.image
+        self.imageAccessoryImageView.contentMode = UIViewContentMode.ScaleAspectFit
+        self.imageAccessoryCancelButton.backgroundColor = UIColor.myLightBlueColor()
+        self.imageAccessoryCancelButton.layer.borderColor = UIColor.whiteColor().CGColor
+        self.imageAccessoryCancelButton.layer.borderWidth = 0.5
+        self.imageAccessoryTimerLabel.backgroundColor = UIColor.myLightBlueColor()
+        self.imageAccessoryTimerLabel.layer.borderColor = UIColor.whiteColor().CGColor
+        self.imageAccessoryTimerLabel.layer.borderWidth = 0.5
+        self.imageAccessoryView.frame = self.mockViewForInputAccessoryView.frame
+        self.imageAccessoryView.layer.borderColor = UIColor.whiteColor().CGColor
+        self.imageAccessoryView.layer.borderWidth = 5.0
+        self.imageAccessoryView.backgroundColor = UIColor.blackColor()
+        self.imageAccessoryView.tag = 100
+        self.blurryView.hidden = false
+        self.view.addSubview(imageAccessoryView)
+        message.timer?.imageDelegate = self
+    }
     
+    func dismissImage() {
+        let viewWithTag = self.view.viewWithTag(100)
+        viewWithTag?.removeFromSuperview()
+    }
+    
+    @IBAction func leaveMessageImageViewButtonTapped(sender: AnyObject) {
+        messageImageTimerComplete()
+    }
+    
+    
+    func imageSwiped() {
+        messageImageTimerComplete()
+    }
+    
+    func updateImageTimerLabel() {
+        self.imageAccessoryTimerLabel.text = message?.timer?.timeAsString()
+    }
+    
+    func messageImageTimerComplete() {
+        if let message = self.message {
+            MessageController.userViewedMessage(message, completion: { (success, message) in
+                self.dismissImage()
+            })
+        }
+        message?.save()
+        tableView.reloadData()
+    }
     
     func scrollToBottom(bool: Bool){
         if self.groupMessages.count > 0 {
@@ -341,13 +412,6 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         }
     }
     
-    //    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-    //        if trueTextView.text == "" {
-    //            trueTextView.resignFirstResponder()
-    //        }
-    //        return true
-    //    }
-    //
     func keyboardShown(notification: NSNotification) {
         let info  = notification.userInfo!
         let value: AnyObject = info[UIKeyboardFrameEndUserInfoKey]!
@@ -369,19 +433,6 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         scrollToBottom(false)
     }
     
-    //    func imageShown(notification: NSNotification) {
-    //        var message: Message?
-    //        self.message = message
-    //        var newImage = UIImageView(image: message!.image)
-    //        newImage = UIImageView(frame: self.blurryView.frame)
-    //        newImage.layer.borderColor = UIColor.blackColor().CGColor
-    //        newImage.userInteractionEnabled = true
-    //        self.view.addSubview(newImage)
-    //
-    //    }
-    
-    
-    
     func startFetchingDataIndicator() {
         self.blurryView.hidden = false
         fetchingGroupMessagesIndicator.startAnimating()
@@ -392,84 +443,11 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         fetchingGroupMessagesIndicator.stopAnimating()
     }
     
-    func tapGestureToDismissFullscreenImage() {
-        view.removeFromSuperview()
-    }
-    
     func tapGestureToDismissKeyBoard() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(MessageBoardViewController.tapGestureToDismissKeyBoard))
         tapGesture.cancelsTouchesInView = true
         view.addGestureRecognizer(tapGesture)
     }
-    
-//    func setUpForImageView(message: Message) {
-//        let imageVC = UIStoryboard(name: "MainOne", bundle: nil).instantiateViewControllerWithIdentifier("imageController")
-//        self.presentViewController(imageVC, animated: false, completion: nil)
-//        let accessingImageVCProperties = imageVC as? ImageViewController
-//        accessingImageVCProperties?.updateWith(message)
-//    }
-    
-    
-    func presentImage(message: Message) {
-        self.message = message
-        self.imageAccessoryImageView.image = message.image
-        self.imageAccessoryImageView.contentMode = UIViewContentMode.ScaleAspectFit
-        self.imageAccessoryCancelButton.backgroundColor = UIColor.myLightBlueColor()
-        self.imageAccessoryCancelButton.layer.borderColor = UIColor.whiteColor().CGColor
-        self.imageAccessoryCancelButton.layer.borderWidth = 0.5
-        self.imageAccessoryTimerLabel.backgroundColor = UIColor.myLightBlueColor()
-        self.imageAccessoryTimerLabel.layer.borderColor = UIColor.whiteColor().CGColor
-        self.imageAccessoryTimerLabel.layer.borderWidth = 0.5
-        self.imageAccessoryView.frame = self.mockViewForInputAccessoryView.frame
-        self.imageAccessoryView.layer.borderColor = UIColor.whiteColor().CGColor
-        self.imageAccessoryView.layer.borderWidth = 5.0
-        self.imageAccessoryView.backgroundColor = UIColor.blackColor()
-        self.imageAccessoryView.tag = 100
-        self.blurryView.hidden = false
-        self.view.addSubview(imageAccessoryView)
-        self.navigationController?.navigationBar.userInteractionEnabled = false
-        message.timer?.imageDelegate = self
-    }
-    
-    func dismissImage() {
-        let viewWithTag = self.view.viewWithTag(100)
-        viewWithTag?.removeFromSuperview()
-    }
-    
-    func updateImageTimerLabel() {
-        self.imageAccessoryTimerLabel.text = message?.timer?.timeAsString()
-    }
-    
-    func messageImageTimerComplete() {
-        if let message = self.message {
-            MessageController.userViewedMessage(message, completion: { (success, message) in
-                self.dismissImage()
-            })
-        }
-        message?.save()
-        tableView.reloadData()
-    }
-    
-    //    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    //
-    //        if segue.identifier == "toViewMessageImage" {
-    //
-    //            let imageVC = segue.destinationViewController as? ImageViewController
-    //
-    //            _ = imageVC!.view
-    //
-    //            let cell = sender as? UITableViewCell
-    //
-    //            let indexPath = tableView.indexPathForCell(cell!)
-    //
-    //            if let selectedRow = indexPath?.row {
-    //
-    //                let message = self.groupMessages[selectedRow]
-    //                imageVC?.updateWith(message)
-    //
-    //            }
-    //        }
-    //    }
 }
 
 
