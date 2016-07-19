@@ -925,6 +925,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="319" height="455"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gdz-oV-ntr">
+                            <rect key="frame" x="0.0" y="0.0" width="319" height="455"/>
+                            <gestureRecognizers/>
+                        </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vLV-hA-Taj">
                             <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                             <color key="backgroundColor" red="0.026642628210000002" green="0.026642628210000002" blue="0.026642628210000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -935,9 +939,6 @@
                             <state key="normal" title="X">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
-                            <connections>
-                                <action selector="leaveMessageImageViewButtonTapped:" destination="upb-FA-2s5" eventType="touchUpInside" id="T1V-ef-2pA"/>
-                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Cy-6r-pQJ">
                             <rect key="frame" x="279" y="0.0" width="40" height="40"/>
@@ -950,10 +951,6 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gdz-oV-ntr">
-                            <rect key="frame" x="0.0" y="0.0" width="319" height="455"/>
-                            <gestureRecognizers/>
-                        </imageView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <gestureRecognizers/>

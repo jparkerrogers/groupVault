@@ -45,6 +45,10 @@ class ReceiverCell: UITableViewCell, ReceiverTimerDelegate {
         sendersProfileImageView.layer.borderColor = UIColor.blackColor().CGColor
         sendersProfileImageView.clipsToBounds = true
         
+//        let imageLongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(MessageBoardViewController.profileImagePressed))
+//        sendersProfileImageView.userInteractionEnabled = true
+//        sendersProfileImageView.addGestureRecognizer(imageLongPressGestureRecognizer)
+        
     }
     
     
@@ -186,4 +190,14 @@ protocol RecieverTableViewCellDelegate: class {
     func receiverLockImageButtonTapped(sender: ReceiverCell)
     
 }
+
+//protocol ReceiverProfileImageCellDelegate: class {
+//    func receiverProfileImageViewLongPressed(sender: ReceiverCell)
+//}
+
+
+
+
+
+
 

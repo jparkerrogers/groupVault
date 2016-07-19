@@ -14,18 +14,10 @@ class WelcomeTableViewCell: UITableViewCell {
     
     @IBOutlet weak var groupNameLabel: UILabel!
     
-//    @IBOutlet weak var blurView: UIView!
-//    
-//    @IBOutlet weak var fetchingDataIndicator: UIActivityIndicatorView!
-    
     var group: Group?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-//        blurView.hidden = true
-//        fetchingDataIndicator.hidesWhenStopped = true
-//        fetchingDataIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.White
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -43,12 +35,8 @@ class WelcomeTableViewCell: UITableViewCell {
                     self.groupImageView.image = UIImage(named: "defaultProfileImage")
                 }
             })
-        
         }
-
-
         groupImageView.layer.masksToBounds = true
-//        groupImageView.clipsToBounds = true
         groupImageView.contentMode = UIViewContentMode.ScaleAspectFill
         groupImageView.layer.borderColor = UIColor.myDarkGrayColor().CGColor
         groupImageView.layer.borderWidth = 0.5
@@ -57,17 +45,5 @@ class WelcomeTableViewCell: UITableViewCell {
         self.groupNameLabel.text = group.groupName
         self.group = group
     }
-    
-//    func startFetchingDataIndicator() {
-//        self.blurView.hidden = false
-//        self.fetchingDataIndicator.startAnimating()
-//        
-//        
-//    }
-//    
-//    func stopFetchingDataIndicator() {
-//        self.blurView.hidden = true
-//        self.fetchingDataIndicator.stopAnimating()
-//    }
     
 }

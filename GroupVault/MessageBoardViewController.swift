@@ -50,6 +50,7 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MessageBoardViewController.keyboardShown(_:)), name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MessageBoardViewController.keyboardHidden(_:)), name: UIKeyboardDidHideNotification, object: nil)
         tapGestureToDismissKeyBoard()
@@ -105,17 +106,19 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         
         imageAccessoryImageView.userInteractionEnabled = true
         
-        let imageDownSwipe = UISwipeGestureRecognizer(target: imageAccessoryImageView, action: #selector(MessageBoardViewController.imageSwiped))
+        let imageDownSwipe = UISwipeGestureRecognizer(target: self, action: #selector(MessageBoardViewController.dismissImage))
         imageDownSwipe.direction = .Down
         self.imageAccessoryImageView.addGestureRecognizer(imageDownSwipe)
         
-        let imageUpSwipe = UISwipeGestureRecognizer(target: imageAccessoryImageView, action: #selector(MessageBoardViewController.imageSwiped))
+        let imageUpSwipe = UISwipeGestureRecognizer(target: self, action: #selector(MessageBoardViewController.dismissImage))
         imageUpSwipe.direction = .Up
         self.imageAccessoryImageView.addGestureRecognizer(imageUpSwipe)
         
+        let cancelButtonTouched = UITapGestureRecognizer(target: self, action: #selector(MessageBoardViewController.dismissImage))
+        imageDownSwipe.direction = .Down
+        self.imageAccessoryCancelButton.addGestureRecognizer(cancelButtonTouched)
+        
     }
-    
-    
     
     override func viewDidAppear(animated: Bool) {
         
@@ -135,17 +138,16 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
     @IBAction func sendButtonTapped(sender: AnyObject) {
         
         if trueTextView.text != "" {
-            trueTextView.resignFirstResponder()
-            //mockTextView.resignFirstResponder()
-            mockKeyboardView.hidden = false
             trueKeyboardView.hidden = true
+            trueTextView.resignFirstResponder()
+            mockTextView.resignFirstResponder()
+            mockKeyboardView.hidden = false
             createMessage()
             trueTextView.text = ""
             mockTextView.text = ""
             
         }
     }
-    
     
     func createMessage() {
         guard let currentUser = self.currentUser,
@@ -164,6 +166,7 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
                         
                     })
                 } else {
+                    self.tableView.reloadData()
                     print("message not saved")
                 }
                 
@@ -217,12 +220,46 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         return true
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if (editingStyle == UITableViewCellEditingStyle.Delete) {
-            let selectedMessage = self.groupMessages[indexPath.row]
-            groupMessages.removeAtIndex(indexPath.row)
+    //    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    //        if (editingStyle == UITableViewCellEditingStyle.Delete) {
+    //            let selectedMessage = self.groupMessages[indexPath.row]
+    //            groupMessages.removeAtIndex(indexPath.row)
+    //            selectedMessage.delete()
+    //            tableView.reloadData()
+    //        }
+    //    }
+    
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]?  {
+        
+        let selectedMessage = self.groupMessages[indexPath.row]
+        
+        let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete") { (UITableViewRowAction, NSIndexPath) -> Void in
+            
+            self.groupMessages.removeAtIndex(indexPath.row)
             selectedMessage.delete()
             tableView.reloadData()
+        }
+        
+        let reportAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Report") { (UITableViewRowAction, NSIndexPath) -> Void in
+            
+            
+            let reportMenu = UIAlertController(title: nil, message: "Are you sure you want to report \(selectedMessage.senderName)?", preferredStyle: .ActionSheet)
+            
+            let reportAction = UIAlertAction(title: "Report", style: UIAlertActionStyle.Default, handler: { (deleteMenu) in
+                MessageController.reportUserForInappropriateContent(selectedMessage)
+            })
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil)
+            
+            reportMenu.addAction(reportAction)
+            reportMenu.addAction(cancelAction)
+            
+            self.presentViewController(reportMenu, animated: true, completion: nil)
+        }
+        if selectedMessage.sender == self.currentUser.identifier {
+            return [deleteAction]
+        } else {
+            return [reportAction]
         }
     }
     
@@ -242,19 +279,23 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         self.startFetchingDataIndicator()
         MessageController.fetchMessagesForGroup(group) { (success, messages) in
             if success == true {
+                MessageController.deleteGroupMessageBasedOnDate(messages)
                 self.stopFetchingDataIndicator()
                 if messages.count > self.groupMessages.count {
                     self.groupMessages = messages.sort({ $0.identifier < $1.identifier })
                     dispatch_async(dispatch_get_main_queue(), {
+                        
                         self.tableView.reloadData()
                         self.scrollToBottom(true)
                     })
                 }
             } else {
+                
                 self.stopFetchingDataIndicator()
                 self.groupMessages = messages.sort({ $0.identifier < $1.identifier })
             }
         }
+        
     }
     
     func cameraImageTapped() {
@@ -333,6 +374,13 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
         }
     }
     
+    //        func profileImagePressed() {image s
+    //            let messageIndexPath = NSIndexPath()
+    //            let selectedMessage = self.groupMessages[messageIndexPath.row]
+    //            tableView.reloadData()
+    //            MessageController.reportUserForInappropriateContent(selectedMessage)
+    //        }
+    
     func presentImage(message: Message) {
         self.message = message
         self.imageAccessoryImageView.image = message.image
@@ -354,17 +402,8 @@ class MessageBoardViewController: UIViewController, UITextFieldDelegate, UIImage
     }
     
     func dismissImage() {
-        let viewWithTag = self.view.viewWithTag(100)
-        viewWithTag?.removeFromSuperview()
-    }
-    
-    @IBAction func leaveMessageImageViewButtonTapped(sender: AnyObject) {
-        messageImageTimerComplete()
-    }
-    
-    
-    func imageSwiped() {
-        messageImageTimerComplete()
+        imageAccessoryView.removeFromSuperview()
+        self.blurryView.hidden = true
     }
     
     func updateImageTimerLabel() {
@@ -467,6 +506,7 @@ extension MessageBoardViewController: SenderTableViewCellDelegate, RecieverTable
         } else if message.text != "" {
             TimerController.sharedInstance.startTimer(message.timer ?? Timer())
             sender.messageViewForSender(message)
+            //            self.profileImagePressed()
         }
     }
     
