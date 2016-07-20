@@ -145,8 +145,6 @@ class BuildAGroupViewController: UIViewController, UITableViewDelegate, UITableV
         
         cell.delegate = self
         
-//        let user = filteredDataSource.count > 0 ? filteredDataSource[indexPath.row]:usersDataSource[indexPath.row]
-        
         let user = usersDataSource[indexPath.row]
         
         cell.userViewOnCell(user)

@@ -1027,6 +1027,9 @@
                                                                         <constraint firstAttribute="height" constant="45" id="Rbe-FH-Se6"/>
                                                                     </constraints>
                                                                     <state key="normal" backgroundImage="addUser"/>
+                                                                    <connections>
+                                                                        <action selector="addUserButtonTapped:" destination="l2S-vA-s77" eventType="touchUpInside" id="3MC-Fe-20C"/>
+                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1052,7 +1055,6 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="addUserButton" destination="xWF-mm-6DU" id="s6u-PB-H8w"/>
-                                            <outlet property="addUserView" destination="dWL-TI-ZlU" id="pWH-V2-ITg"/>
                                             <outlet property="userLabel" destination="Zpe-BQ-brB" id="CGh-kz-y4c"/>
                                             <outlet property="userProfileImageView" destination="959-7T-OoP" id="jFP-d8-bhd"/>
                                         </connections>

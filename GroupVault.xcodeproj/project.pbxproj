@@ -62,7 +62,7 @@
 		AC01C36F1CB434CF00D1A1CB /* ReceiverCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiverCell.swift; sourceTree = "<group>"; };
 		AC1BF6651D1BB29300DC25BB /* ZFilteredResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZFilteredResultsTableViewController.swift; sourceTree = "<group>"; };
 		AC2DC9821D1DAF5300050D12 /* FilteredBuildAGroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredBuildAGroupTableViewCell.swift; sourceTree = "<group>"; };
-		AC304C211D3F15C600930753 /* BuildAGroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildAGroupTableViewCell.swift; sourceTree = "<group>"; };
+		AC304C211D3F15C600930753 /* BuildAGroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildAGroupTableViewCell.swift; path = ../BuildAGroupTableViewCell.swift; sourceTree = "<group>"; };
 		AC5AABF71D08DC2B00AB73DC /* WelcomeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeTableViewCell.swift; sourceTree = "<group>"; };
 		AC707EEB1D11C42A00A45A65 /* ReceiverImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiverImageViewController.swift; sourceTree = "<group>"; };
 		AC733F321CEFB91D00716810 /* MessageBoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBoardViewController.swift; sourceTree = "<group>"; };
@@ -115,7 +115,6 @@
 		AC8E60861CA1E958004DDC87 = {
 			isa = PBXGroup;
 			children = (
-				AC304C211D3F15C600930753 /* BuildAGroupTableViewCell.swift */,
 				AC8E60911CA1E958004DDC87 /* GroupVault */,
 				AC8E60901CA1E958004DDC87 /* Products */,
 				AC8E60B31CA1EDEF004DDC87 /* Firebase */,
@@ -202,6 +201,7 @@
 				AC8E60B61CA1F8F9004DDC87 /* WelcomeTableViewController.swift */,
 				AC5AABF71D08DC2B00AB73DC /* WelcomeTableViewCell.swift */,
 				AC8E60B81CA1FDB4004DDC87 /* BuildAGroupViewController.swift */,
+				AC304C211D3F15C600930753 /* BuildAGroupTableViewCell.swift */,
 				AC2DC9821D1DAF5300050D12 /* FilteredBuildAGroupTableViewCell.swift */,
 				AC01C36F1CB434CF00D1A1CB /* ReceiverCell.swift */,
 				AC01C36D1CB4332A00D1A1CB /* SenderCell.swift */,
