@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="7c5-k2-maE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="7c5-k2-maE">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -1027,9 +1027,6 @@
                                                                         <constraint firstAttribute="height" constant="45" id="Rbe-FH-Se6"/>
                                                                     </constraints>
                                                                     <state key="normal" backgroundImage="addUser"/>
-                                                                    <connections>
-                                                                        <action selector="addUserButtonTapped:" destination="l2S-vA-s77" eventType="touchUpInside" id="dlM-1x-uF6"/>
-                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1054,10 +1051,10 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="addUserButton" destination="xWF-mm-6DU" id="1pv-LS-pQ1"/>
+                                            <outlet property="addUserButton" destination="xWF-mm-6DU" id="s6u-PB-H8w"/>
                                             <outlet property="addUserView" destination="dWL-TI-ZlU" id="pWH-V2-ITg"/>
-                                            <outlet property="userLabel" destination="Zpe-BQ-brB" id="A3i-hw-ZA8"/>
-                                            <outlet property="userProfileImageView" destination="959-7T-OoP" id="bif-24-p4H"/>
+                                            <outlet property="userLabel" destination="Zpe-BQ-brB" id="CGh-kz-y4c"/>
+                                            <outlet property="userProfileImageView" destination="959-7T-OoP" id="jFP-d8-bhd"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
